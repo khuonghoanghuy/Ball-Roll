@@ -1,0 +1,36 @@
+{
+    "bosses": [
+        {
+            "type": "Classic",
+            "displayName": "Classic",
+            "color": "ORANGE",
+            "maxHealth": 100,
+            "phase2Threshold": 50,
+            "phase2Duration": 20,
+            "movePattern": "sine",
+            "moveSpeed": 2,
+            "moveAmplitude": 40,
+            "shootCooldown": 0.8,
+            "phase2ShootMultiplier": 0.75,
+            "spawnChance": 50,
+            "unlockScore": 0,
+            "available": true
+        },
+        {
+            "type": "Surprise",
+            "displayName": "Surprise",
+            "color": "PURPLE",
+            "maxHealth": 80,
+            "phase2Threshold": 20,
+            "phase2Duration": 8,
+            "movePattern": "erratic",
+            "moveSpeed": 3,
+            "moveAmplitude": 60,
+            "shootCooldown": 0.75,
+            "phase2ShootMultiplier": 0.65,
+            "spawnChance": 30,
+            "unlockScore": 0,
+            "available": true
+        }
+    ]
+}

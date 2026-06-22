@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://lime.openfl.org/project/1.0.4" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/xsd/project-1.0.4.xsd">
+
+	<!-- ======================== APPLICATION SETTINGS ======================== -->
+	
+	<app title="Ball Roll" 
+	     file="ballRoll" 
+	     main="Main" 
+	     version="1.0.0" 
+	     company="Huy1234TH" />
+	
+	<app preloader="flixel.system.FlxPreloader" />
+	<set name="SWF_VERSION" value="11.8" />
+
+	<!-- ========================== WINDOW SETTINGS =========================== -->
+	
+	<window width="1280" 
+	        height="720" 
+	        fps="60" 
+	        background="0x000000" 
+	        hardware="true" 
+	        vsync="true" />
+	
+	<window width="0" height="0" if="mobile" />
+	<window if="html5" resizable="true" />
+	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" />
+	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" />
+
+	<!-- =========================== PATH SETTINGS ============================ -->
+	
+	<set name="BUILD_DIR" value="export" />
+	<source path="source" />
+	<assets path="assets" embed="true" />
+
+	<!-- ============================ LIBRARIES =============================== -->
+	
+	<haxelib name="flixel" />
+	<haxelib name="flixel-addons" />
+	<haxelib name="flixel-ui" />
+
+	<!-- ============================ HAXEDEFINES ============================= -->
+	
+	<haxedef name="FLX_NO_HEALTH" />
+	<haxedef name="FLX_NO_SOUND_TRAY" />
+	<haxedef name="FLX_NO_DEBUG" unless="debug" />
+	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
+	<haxedef name="message.reporting" value="pretty" />
+
+	<!-- ======================== INPUT OPTIMIZATIONS ========================= -->
+	
+	<!-- Disable mouse/keyboard on mobile and fakeMobile targets -->
+	<haxedef name="FLX_NO_MOUSE" if="mobile | fakeMobile" />
+	<haxedef name="FLX_NO_KEYBOARD" if="mobile | fakeMobile" />
+	
+	<!-- Only disable touch on actual desktop (not fakeMobile) -->
+	<haxedef name="FLX_NO_TOUCH" if="desktop &amp;&amp; !fakeMobile" />
+	<haxedef name="FLX_TOUCH" if="fakeMobile | mobile" />
+
+	<!-- ============================ CUSTOM DEFINES ========================== -->
+	
+	<define name="fakeMobile" />
+	
+	<!-- =========================== ICON ASSETS ============================== -->
+	
+	<icon path="gameStuff/icon/iconGame.png" unless="linux" />
+	<assets path="gameStuff/icon/iconGame.png" embed="true" if="linux" />
+
+</project>

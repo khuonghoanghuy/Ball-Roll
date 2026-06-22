@@ -1,0 +1,643 @@
+digraph graphname {
+	node [shape=plaintext];
+n556157[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556157) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var tmp = Math.random()</td></tr>
+	<tr><td port="e1" align="left">var tmp = maxSpawnDelay - minSpawnDelay</td></tr>
+	<tr><td port="e2" align="left">var tmp = tmp * tmp</td></tr>
+	<tr><td port="e3" align="left">this.nextSpawnTime = minSpawnDelay + tmp</td></tr>
+	<tr><td port="e4" align="left">this.spawnTimer = 0</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556156[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556156) BKConditional</td></tr>
+	<tr><td port="e0" align="left">maxSpawnDelay = 1.0</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556155[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556155) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var tmp = maxSpawnDelay &lt; 1.0</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556154[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556154) BKConditional</td></tr>
+	<tr><td port="e0" align="left">minSpawnDelay = 0.5</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556153[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556153) BKNormal</td></tr>
+	<tr><td port="e0" align="left">this.add(ball)</td></tr>
+	<tr><td port="e1" align="left">this.enemyLineDown.add(ball)</td></tr>
+	<tr><td port="e2" align="left">var speedFactor = this.timeSecond / 20</td></tr>
+	<tr><td port="e3" align="left">var speedFactor = speedFactor * 0.1</td></tr>
+	<tr><td port="e4" align="left">var minSpawnDelay = 1.2 - speedFactor</td></tr>
+	<tr><td port="e5" align="left">var maxSpawnDelay = 2.5 - speedFactor</td></tr>
+	<tr><td port="e6" align="left">var tmp = minSpawnDelay &lt; 0.5</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556152[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556152) BKSub</td></tr>
+	<tr><td port="e0" align="left">var this = ball.velocity</td></tr>
+	<tr><td port="e1" align="left">var x = this.currentGlobalSpeed</td></tr>
+	<tr><td port="e2" align="left">this.set_x(x)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556151[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556151) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var ex = flixel.FlxG.width</td></tr>
+	<tr><td port="e1" align="left">var ball = new Enemy(ex, ey, EnemyType.Ball_Heal)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556150[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556150) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var ey = this.floorY - 160</td></tr>
+	<tr><td port="e1" align="left">ey = ey - enemyHeight</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556149[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556149) BKConditional</td></tr>
+	<tr><td port="e0" align="left">ey = this.floorY - enemyHeight</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556148[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556148) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var ey</td></tr>
+	<tr><td port="e1" align="left">var ey = line == 1</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556147[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556147) BKConditional</td></tr>
+	<tr><td port="e0" align="left">line = 1</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556146[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556146) BKConditional</td></tr>
+	<tr><td port="e0" align="left">line = 0</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556145[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556145) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var line</td></tr>
+	<tr><td port="e1" align="left">var line = Math.random()</td></tr>
+	<tr><td port="e2" align="left">var line = line &lt; 0.5</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556144[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556144) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var tmp = eType == EnemyType.Ball_Heal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556143[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556143) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var enemyHeight = 48</td></tr>
+	<tr><td port="e1" align="left">var config = Enemy.getConfigForType(eType)</td></tr>
+	<tr><td port="e2" align="left">var tmp = config != null</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556142[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556142) BKConditional</td></tr>
+	<tr><td port="e0" align="left">eType = EnemyType.Normal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556141[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556141) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var eType = Enemy.getRandomEnemyType(this.timeSecond)</td></tr>
+	<tr><td port="e1" align="left">var tmp = eType == null</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556140[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556140) BKConditional</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556139[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556139) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var tmp = this</td></tr>
+	<tr><td port="e1" align="left">var tmp = tmp.spawnTimer</td></tr>
+	<tr><td port="e2" align="left">var elapsed = elapsed</td></tr>
+	<tr><td port="e3" align="left">tmp.spawnTimer = tmp + elapsed</td></tr>
+	<tr><td port="e4" align="left">var tmp = this.spawnTimer &gt;= this.nextSpawnTime</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556138[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556138) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var tmp = ! this.isBossActive</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556137[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556137) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var this = this.player.velocity</td></tr>
+	<tr><td port="e1" align="left">this.set_y(750)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556136[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556136) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556135[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556135) BKConditional</td></tr>
+	<tr><td port="e0" align="left">tmp = false</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556134[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556134) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var tmp = cast this.player.touching &amp; cast cast 4096</td></tr>
+	<tr><td port="e1" align="left">tmp = tmp &lt;= 0</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556133[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556133) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var tmp</td></tr>
+	<tr><td port="e1" align="left">var _this = flixel.FlxG.keys.justPressed</td></tr>
+	<tr><td port="e2" align="left">var tmp = _this.keyManager.checkStatusUnsafe(cast 40, _this.status)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556132[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556132) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556131[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556131) BKSub</td></tr>
+	<tr><td port="e0" align="left">var this = this.player.velocity</td></tr>
+	<tr><td port="e1" align="left">this.set_y(-500)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556130[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556130) BKConditional</td></tr>
+	<tr><td port="e0" align="left">flixel.FlxG.sound.play(\"assets/sounds/jump.ogg\", null, null, null, null, null)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556129[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556129) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556128[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556128) BKConditional</td></tr>
+	<tr><td port="e0" align="left">tmp = false</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556127[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556127) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var tmp = cast this.player.touching &amp; cast cast 4096</td></tr>
+	<tr><td port="e1" align="left">tmp = tmp &gt; 0</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556126[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556126) BKNormal</td></tr>
+	<tr><td port="e0" align="left">flixel.FlxG.overlap(this.player, this.enemyLineUp, this.onPlayerHitEnemy, null)</td></tr>
+	<tr><td port="e1" align="left">flixel.FlxG.overlap(this.player, this.enemyLineDown, this.onPlayerHitEnemy, null)</td></tr>
+	<tr><td port="e2" align="left">var tmp</td></tr>
+	<tr><td port="e3" align="left">var _this = flixel.FlxG.keys.justPressed</td></tr>
+	<tr><td port="e4" align="left">var tmp = _this.keyManager.checkStatusUnsafe(cast 38, _this.status)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556125[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556125) BKSub</td></tr>
+	<tr><td port="e0" align="left">var objectOrGroup1 = this.player</td></tr>
+	<tr><td port="e1" align="left">var objectOrGroup2 = this.invisibleLine</td></tr>
+	<tr><td port="e2" align="left">var notifyCallback = null</td></tr>
+	<tr><td port="e3" align="left">flixel.FlxG.overlap(objectOrGroup1, objectOrGroup2, notifyCallback, flixel.FlxObject.separate)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556124[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556124) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556123[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556123) BKConditional</td></tr>
+	<tr><td port="e0" align="left">this.isBossActive = true</td></tr>
+	<tr><td port="e1" align="left">this.bossActiveTimer = 0</td></tr>
+	<tr><td port="e2" align="left">var tmp = this</td></tr>
+	<tr><td port="e3" align="left">var tmp = tmp.nextBossScore</td></tr>
+	<tr><td port="e4" align="left">var tmp = 10000</td></tr>
+	<tr><td port="e5" align="left">tmp.nextBossScore = tmp + tmp</td></tr>
+	<tr><td port="e6" align="left">this.bossStartTimeSecond = this.timeSecond</td></tr>
+	<tr><td port="e7" align="left">this.bossStartGlobalSpeed = this.currentGlobalSpeed</td></tr>
+	<tr><td port="e8" align="left">var tmp = this.bossDefeatedCount * 0.2</td></tr>
+	<tr><td port="e9" align="left">this.bossDifficultyMultiplier = 1 + tmp</td></tr>
+	<tr><td port="e10" align="left">this.boss = Boss.createWithScore(this.floorY, this.bossDifficultyMultiplier, this.totalScore)</td></tr>
+	<tr><td port="e11" align="left">this.add(this.boss)</td></tr>
+	<tr><td port="e12" align="left">this.bossHealthBar.setParent(this.boss, \"health\", false, null, null)</td></tr>
+	<tr><td port="e13" align="left">this.bossHealthBar.set_visible(true)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556122[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556122) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556121[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556121) BKConditional</td></tr>
+	<tr><td port="e0" align="left">tmp = false</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556120[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556120) BKConditional</td></tr>
+	<tr><td port="e0" align="left">tmp = ! this.isBossActive</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556119[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556119) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var tmp</td></tr>
+	<tr><td port="e1" align="left">var tmp = this.totalScore &gt;= this.nextBossScore</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556118[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556118) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var tmp = this.highScoreText</td></tr>
+	<tr><td port="e1" align="left">var x = this.displayedScore</td></tr>
+	<tr><td port="e2" align="left">var tmp = $int(x)</td></tr>
+	<tr><td port="e3" align="left">var tmp = \"High Score: \" + tmp</td></tr>
+	<tr><td port="e4" align="left">tmp.set_text(tmp)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556117[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556117) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var scoreGainPerSecond = 60</td></tr>
+	<tr><td port="e1" align="left">var tmp = this</td></tr>
+	<tr><td port="e2" align="left">var tmp = tmp.totalScore</td></tr>
+	<tr><td port="e3" align="left">var tmp = $int(scoreGainPerSecond * elapsed)</td></tr>
+	<tr><td port="e4" align="left">tmp.totalScore = tmp + tmp</td></tr>
+	<tr><td port="e5" align="left">var tmp = this.displayedScore &gt; flixel.FlxG.save.data.highScore</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556116[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556116) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556115[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556115) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var tmp = this</td></tr>
+	<tr><td port="e1" align="left">var tmp = tmp.timeSecond</td></tr>
+	<tr><td port="e2" align="left">var tmp = 1</td></tr>
+	<tr><td port="e3" align="left">tmp.timeSecond = tmp + tmp</td></tr>
+	<tr><td port="e4" align="left">var tmp = this</td></tr>
+	<tr><td port="e5" align="left">var tmp = tmp.scoreTimer</td></tr>
+	<tr><td port="e6" align="left">var tmp = 1</td></tr>
+	<tr><td port="e7" align="left">tmp.scoreTimer = tmp - tmp</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556114[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556114) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var tmp = this</td></tr>
+	<tr><td port="e1" align="left">var tmp = tmp.scoreTimer</td></tr>
+	<tr><td port="e2" align="left">var elapsed = elapsed</td></tr>
+	<tr><td port="e3" align="left">tmp.scoreTimer = tmp + elapsed</td></tr>
+	<tr><td port="e4" align="left">var tmp = this.scoreTimer &gt;= 1</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556113[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556113) BKNormal</td></tr>
+	<tr><td port="e0" align="left">this.displayedScore = GameUtil.lerpInt(this.displayedScore, this.totalScore, 1, elapsed)</td></tr>
+	<tr><td port="e1" align="left">var tmp = this.scoreText</td></tr>
+	<tr><td port="e2" align="left">var x = this.displayedScore</td></tr>
+	<tr><td port="e3" align="left">var tmp = $int(x)</td></tr>
+	<tr><td port="e4" align="left">var tmp = \"Score: \" + tmp</td></tr>
+	<tr><td port="e5" align="left">tmp.set_text(tmp)</td></tr>
+	<tr><td port="e6" align="left">var tmp = ! this.isBossActive</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556112[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556112) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556111[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556111) BKConditional</td></tr>
+	<tr><td port="e0" align="left">this.dustEmitter.emitting = false</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556110[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556110) BKConditional</td></tr>
+	<tr><td port="e0" align="left">this.dustEmitter.emitting = true</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556109[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556109) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var tmp = this.player.x</td></tr>
+	<tr><td port="e1" align="left">var tmp = this.player.get_width()</td></tr>
+	<tr><td port="e2" align="left">var tmp = tmp / 2</td></tr>
+	<tr><td port="e3" align="left">var tmp = tmp + tmp</td></tr>
+	<tr><td port="e4" align="left">this.dustEmitter.x = -10 + tmp</td></tr>
+	<tr><td port="e5" align="left">var tmp = this.player.y</td></tr>
+	<tr><td port="e6" align="left">var tmp = this.player.get_height()</td></tr>
+	<tr><td port="e7" align="left">var tmp = tmp + tmp</td></tr>
+	<tr><td port="e8" align="left">this.dustEmitter.y = tmp - 4</td></tr>
+	<tr><td port="e9" align="left">var tmp = cast this.player.touching &amp; cast cast 4096</td></tr>
+	<tr><td port="e10" align="left">var tmp = tmp &gt; 0</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556108[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556108) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var fh = this.floor</td></tr>
+	<tr><td port="e1" align="left">var fh = fh.x</td></tr>
+	<tr><td port="e2" align="left">var tmp = floorSpeed * elapsed</td></tr>
+	<tr><td port="e3" align="left">var tmp = fh + tmp</td></tr>
+	<tr><td port="e4" align="left">fh.set_x(tmp)</td></tr>
+	<tr><td port="e5" align="left">var fh = this.player</td></tr>
+	<tr><td port="e6" align="left">var fh = fh.angle</td></tr>
+	<tr><td port="e7" align="left">var tmp = Math.abs(this.currentGlobalSpeed)</td></tr>
+	<tr><td port="e8" align="left">var tmp = tmp * elapsed</td></tr>
+	<tr><td port="e9" align="left">var tmp = fh + tmp</td></tr>
+	<tr><td port="e10" align="left">fh.set_angle(tmp)</td></tr>
+	<tr><td port="e11" align="left">var tmp = this.dustEmitter != null</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556107[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556107) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556106[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556106) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556105[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556105) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556104[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556104) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var tmp = flixel.FlxG.width</td></tr>
+	<tr><td port="e1" align="left">var tmp = Math.random()</td></tr>
+	<tr><td port="e2" align="left">var tmp = tmp * 100</td></tr>
+	<tr><td port="e3" align="left">var tmp = tmp + tmp</td></tr>
+	<tr><td port="e4" align="left">bushSprite.set_x(tmp)</td></tr>
+	<tr><td port="e5" align="left">var tmp = this.floorY - 26</td></tr>
+	<tr><td port="e6" align="left">bushSprite.set_y(tmp)</td></tr>
+	<tr><td port="e7" align="left">var tmp = this.bushImages</td></tr>
+	<tr><td port="e8" align="left">var x = Math.random()</td></tr>
+	<tr><td port="e9" align="left">var x = x * this.bushImages.length</td></tr>
+	<tr><td port="e10" align="left">var tmp = $int(x)</td></tr>
+	<tr><td port="e11" align="left">var tmp = tmp[tmp]</td></tr>
+	<tr><td port="e12" align="left">bushSprite.loadGraphic(tmp, true, 48, 26, null, null)</td></tr>
+	<tr><td port="e13" align="left">bushSprite.animation.add(\"idle\", [0, 1, 2, 3], 12, true, null, null)</td></tr>
+	<tr><td port="e14" align="left">bushSprite.animation.play(\"idle\", true, null, null)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556103[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556103) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var bushSprite = bushSprite.x</td></tr>
+	<tr><td port="e1" align="left">var tmp = bushSprite.get_width()</td></tr>
+	<tr><td port="e2" align="left">var tmp = bushSprite + tmp</td></tr>
+	<tr><td port="e3" align="left">var tmp = tmp &lt; 0</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556102[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556102) BKSub</td></tr>
+	<tr><td port="e0" align="left">var this = bushSprite.velocity</td></tr>
+	<tr><td port="e1" align="left">var x = this.currentGlobalSpeed * 0.5</td></tr>
+	<tr><td port="e2" align="left">this.set_x(x)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556101[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556101) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var bushSprite = cast bush</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556100[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556100) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var bush = `[`]</td></tr>
+	<tr><td port="e1" align="left">` = ` + 1</td></tr>
+	<tr><td port="e2" align="left">var tmp = bush != null</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556099[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556099) BKConditional</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556098[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556098) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var tmp = ! ((` &lt; `.length))</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556097[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556097) BKLoopHead</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556096[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556096) BKSub</td></tr>
+	<tr><td port="e0" align="left">var ` = 0</td></tr>
+	<tr><td port="e1" align="left">var ` = this.bushGroup.members</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556095[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556095) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556094[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556094) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556093[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556093) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556092[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556092) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556091[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556091) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var tmp = flixel.FlxG.width</td></tr>
+	<tr><td port="e1" align="left">var tmp = Math.random()</td></tr>
+	<tr><td port="e2" align="left">var tmp = tmp * 100</td></tr>
+	<tr><td port="e3" align="left">var tmp = tmp + tmp</td></tr>
+	<tr><td port="e4" align="left">treeSprite.set_x(tmp)</td></tr>
+	<tr><td port="e5" align="left">var tmp = this.floorY - 96</td></tr>
+	<tr><td port="e6" align="left">treeSprite.set_y(tmp)</td></tr>
+	<tr><td port="e7" align="left">var tmp = this.treeImages</td></tr>
+	<tr><td port="e8" align="left">var x = Math.random()</td></tr>
+	<tr><td port="e9" align="left">var x = x * this.treeImages.length</td></tr>
+	<tr><td port="e10" align="left">var tmp = $int(x)</td></tr>
+	<tr><td port="e11" align="left">var tmp = tmp[tmp]</td></tr>
+	<tr><td port="e12" align="left">treeSprite.loadGraphic(tmp, true, 32, 48, null, null)</td></tr>
+	<tr><td port="e13" align="left">treeSprite.animation.add(\"idle\", [0, 1, 2, 3], 12, true, null, null)</td></tr>
+	<tr><td port="e14" align="left">treeSprite.animation.play(\"idle\", true, null, null)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556090[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556090) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var treeSprite = treeSprite.x</td></tr>
+	<tr><td port="e1" align="left">var tmp = treeSprite.get_width()</td></tr>
+	<tr><td port="e2" align="left">var tmp = treeSprite + tmp</td></tr>
+	<tr><td port="e3" align="left">var tmp = tmp &lt; 0</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556089[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556089) BKSub</td></tr>
+	<tr><td port="e0" align="left">var this = treeSprite.velocity</td></tr>
+	<tr><td port="e1" align="left">var x = this.currentGlobalSpeed * 0.5</td></tr>
+	<tr><td port="e2" align="left">this.set_x(x)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556088[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556088) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var treeSprite = cast tree</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556087[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556087) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var tree = `[`]</td></tr>
+	<tr><td port="e1" align="left">` = ` + 1</td></tr>
+	<tr><td port="e2" align="left">var tmp = tree != null</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556086[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556086) BKConditional</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556085[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556085) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var tmp = ! ((` &lt; `.length))</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556084[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556084) BKLoopHead</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556083[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556083) BKSub</td></tr>
+	<tr><td port="e0" align="left">var ` = 0</td></tr>
+	<tr><td port="e1" align="left">var ` = this.treeGroup.members</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556082[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556082) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556081[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556081) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556080[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556080) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556079[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556079) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556078[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556078) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var tmp = flixel.FlxG.width</td></tr>
+	<tr><td port="e1" align="left">var tmp = Math.random()</td></tr>
+	<tr><td port="e2" align="left">var tmp = tmp * 100</td></tr>
+	<tr><td port="e3" align="left">var tmp = tmp + tmp</td></tr>
+	<tr><td port="e4" align="left">cloudSprite.set_x(tmp)</td></tr>
+	<tr><td port="e5" align="left">var tmp = Math.random()</td></tr>
+	<tr><td port="e6" align="left">var tmp = tmp * 200</td></tr>
+	<tr><td port="e7" align="left">var tmp = 30 + tmp</td></tr>
+	<tr><td port="e8" align="left">cloudSprite.set_y(tmp)</td></tr>
+	<tr><td port="e9" align="left">var randomFrame = this.cloudImages</td></tr>
+	<tr><td port="e10" align="left">var x = Math.random()</td></tr>
+	<tr><td port="e11" align="left">var x = x * this.cloudImages.length</td></tr>
+	<tr><td port="e12" align="left">var randomFrame = $int(x)</td></tr>
+	<tr><td port="e13" align="left">var randomFrame = randomFrame[randomFrame]</td></tr>
+	<tr><td port="e14" align="left">cloudSprite.loadGraphic(randomFrame, null, null, null, null, null)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556077[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556077) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var cloudSprite = cloudSprite.x</td></tr>
+	<tr><td port="e1" align="left">var tmp = cloudSprite.get_width()</td></tr>
+	<tr><td port="e2" align="left">var tmp = cloudSprite + tmp</td></tr>
+	<tr><td port="e3" align="left">var tmp = tmp &lt; 0</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556076[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556076) BKSub</td></tr>
+	<tr><td port="e0" align="left">var this = cloudSprite.velocity</td></tr>
+	<tr><td port="e1" align="left">var x = this.currentGlobalSpeed * 0.2</td></tr>
+	<tr><td port="e2" align="left">this.set_x(x)</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556075[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556075) BKConditional</td></tr>
+	<tr><td port="e0" align="left">var cloudSprite = cast cloud</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556074[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556074) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var cloud = `[`]</td></tr>
+	<tr><td port="e1" align="left">` = ` + 1</td></tr>
+	<tr><td port="e2" align="left">var tmp = cloud != null</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556073[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556073) BKConditional</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556072[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556072) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var tmp = ! ((` &lt; `.length))</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556071[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556071) BKLoopHead</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556070[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556070) BKSub</td></tr>
+	<tr><td port="e0" align="left">var ` = 0</td></tr>
+	<tr><td port="e1" align="left">var ` = this.cloudGroup.members</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556069[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556069) BKNormal</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556068[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556068) BKConditional</td></tr>
+	<tr><td port="e0" align="left">floorSpeed = -900</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556067[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556067) BKNormal</td></tr>
+	<tr><td port="e0" align="left">this.currentGlobalSpeed = baseSpeed * speedMultiplier</td></tr>
+	<tr><td port="e1" align="left">var floorSpeed = this.baseEnemySpeed</td></tr>
+	<tr><td port="e2" align="left">var floorSpeed = $int(effectiveTimeSecond / 5)</td></tr>
+	<tr><td port="e3" align="left">var floorSpeed = floorSpeed * 30</td></tr>
+	<tr><td port="e4" align="left">var floorSpeed = floorSpeed - floorSpeed</td></tr>
+	<tr><td port="e5" align="left">var tmp = floorSpeed &lt; -900</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556066[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556066) BKConditional</td></tr>
+	<tr><td port="e0" align="left">baseSpeed = -900</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556065[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556065) BKNormal</td></tr>
+	<tr><td port="e0" align="left">var speedMultiplier = this.bossDefeatedCount * 0.1</td></tr>
+	<tr><td port="e1" align="left">var speedMultiplier = 1 + speedMultiplier</td></tr>
+	<tr><td port="e2" align="left">var baseSpeed = this.baseEnemySpeed</td></tr>
+	<tr><td port="e3" align="left">var baseSpeed = $int(effectiveTimeSecond / 5)</td></tr>
+	<tr><td port="e4" align="left">var baseSpeed = baseSpeed * 30</td></tr>
+	<tr><td port="e5" align="left">var baseSpeed = baseSpeed - baseSpeed</td></tr>
+	<tr><td port="e6" align="left">var tmp = baseSpeed &lt; -900</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556064[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556064) BKConditional</td></tr>
+	<tr><td port="e0" align="left">effectiveTimeSecond = this.timeSecond</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556063[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556063) BKConditional</td></tr>
+	<tr><td port="e0" align="left">effectiveTimeSecond = this.bossStartTimeSecond</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556062[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556062) BKFunctionEnd</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n556061[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(556061) BKFunctionBegin</td></tr>
+	<tr><td port="e0" align="left">super.update(elapsed)</td></tr>
+	<tr><td port="e1" align="left">var effectiveTimeSecond</td></tr>
+	<tr><td port="e2" align="left">var effectiveTimeSecond = this.isBossActive</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n1[label=<<table BORDER="0" CELLBORDER="1" CELLSPACING="0">
+	<tr><td port="in" bgcolor="lightgray">(1) BKRoot</td></tr>
+	<tr><td port="out"></td></tr>
+</table>>];
+n1:out -> n556061:in[label="CFGFunction"];
+}

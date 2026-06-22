@@ -1,0 +1,43 @@
+{
+    "items": [
+        {
+            "id": "playerHealth",
+            "name": "Player Health",
+            "description": "Increase max health by 25 HP",
+            "icon": "heart",
+            "type": "upgrade",
+            "baseCost": 150,
+            "costMultiplier": 1.35,
+            "maxLevel": 5000,
+            "incrementAmount": 25,
+            "saveKey": "playerHealth",
+            "costKey": "healthCost"
+        },
+        {
+            "id": "ballHealth",
+            "name": "Ball Heal",
+            "description": "This ball gained your HP",
+            "icon": "ball_heal",
+            "type": "upgrade",
+            "baseCost": 80,
+            "costMultiplier": 1.5,
+            "maxLevel": 100,
+            "incrementAmount": 5,
+            "saveKey": "ballGainHealth",
+            "costKey": "ballHealthCost"
+        },
+        {
+            "id": "barrier",
+            "name": "Barrier",
+            "description": "Protects from 1 hit per charge",
+            "icon": "barrier",
+            "type": "buy",
+            "baseCost": 400,
+            "costMultiplier": 1.0,
+            "maxLevel": 100,
+            "incrementAmount": 1,
+            "saveKey": "barrier",
+            "costKey": "barrierCost"
+        }
+    ]
+}
