@@ -23,16 +23,26 @@ jobs:
       with:
         haxe-version: 4.3.6
 
+    - name: Cache Haxe Libraries
+      uses: actions/cache@v4
+      id: cache-haxelib
+      with:
+        path: ~/haxelib
+        key: ${{ runner.os }}-haxelib-v1
+
     - name: Install Haxe Libraries
+      if: steps.cache-haxelib.outputs.cache-hit != 'true'
       run: |
         haxelib setup ~/haxelib
         haxelib install lime --quiet
         haxelib install openfl --quiet
         haxelib install flixel --quiet
-        
         haxelib install flixel-addons --quiet
         haxelib install flixel-ui --quiet
-        
+
+    - name: Setup Lime
+      run: |
+        haxelib setup ~/haxelib
         haxelib run lime setup --quiet
 
     - name: Build HTML5
