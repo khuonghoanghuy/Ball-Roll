@@ -445,41 +445,24 @@ class PlayState extends FlxState
         
         #if (mobile || fakeMobile)
         touchJumpCooldown -= elapsed;
+        isDiving = false;
+
         for (touch in FlxG.touches.list)
         {
-            if (touch.justPressed)
+            if (touch.x < FlxG.width / 2)
             {
-                if (touch.x < FlxG.width / 2)
+                if (touch.justPressed && player.isTouching(FLOOR) && touchJumpCooldown <= 0)
                 {
-                    if (player.isTouching(FLOOR) && touchJumpCooldown <= 0)
-                    {
-                        FlxG.sound.play(AssetPaths.jump__ogg);
-                        player.velocity.y = -500;
-                        touchJumpCooldown = 0.2;
-                    }
-                }
-                else
-                {
-                    if (!player.isTouching(FLOOR))
-                    {
-                        isDiving = true;
-                        player.velocity.y = 750;
-                    }
+                    FlxG.sound.play(AssetPaths.jump__ogg);
+                    player.velocity.y = -500;
+                    touchJumpCooldown = 0.2;
                 }
             }
-            
-            if (touch.justReleased)
+            else
             {
-                if (touch.x >= FlxG.width / 2)
+                if (!player.isTouching(FLOOR) && touch.pressed)
                 {
-                    isDiving = false;
-                }
-            }
-            
-            if (touch.x >= FlxG.width / 2 && touch.pressed && isDiving)
-            {
-                if (!player.isTouching(FLOOR))
-                {
+                    isDiving = true;
                     player.velocity.y = 750;
                 }
             }
@@ -529,7 +512,6 @@ class PlayState extends FlxState
                 spawnCount++;
                 var enemyHeight:Float = 48;
                 var config = Enemy.getConfigForType(eType);
-                
                 if (config != null)
                 {
                     var line = 0;
@@ -770,7 +752,6 @@ class PlayState extends FlxState
             player.health -= damageAmount;
             player.animation.play("get hit", true);
             timesHitByEnemy += 1;
-            FlxG.camera.shake(0.005 + (damageAmount / 2000), 0.08 + (damageAmount / 2000));
         }
     }
 }
