@@ -28,7 +28,8 @@ jobs:
       id: cache-haxelib
       with:
         path: ~/haxelib
-        key: ${{ runner.os }}-haxelib-v1
+        # Đổi thành 'Linux' cố định để dùng chung cache với job Ubuntu Desktop bên dưới
+        key: Linux-haxelib-v1
 
     - name: Install Haxe Libraries
       if: steps.cache-haxelib.outputs.cache-hit != 'true'
@@ -77,7 +78,8 @@ jobs:
       id: cache-haxelib
       with:
         path: ~/haxelib
-        key: ${{ matrix.os }}-haxelib-v1
+        # macOS và Windows tự tạo key riêng, còn Ubuntu sẽ tự ra chữ 'Linux' trùng với job HTML5 ở trên
+        key: ${{ runner.os }}-haxelib-v1
 
     - name: Install Haxe Libraries
       if: steps.cache-haxelib.outputs.cache-hit != 'true'
@@ -98,7 +100,8 @@ jobs:
       run: haxelib run lime build hl -final
 
     - name: Upload Desktop Artifacts
-      uses: actions/artifacts@v4
+      # ĐÃ SỬA: Tên chuẩn của GitHub Action để upload file build
+      uses: actions/upload-artifact@v4
       with:
         name: game-${{ matrix.os }}-hashlink
         path: export/hl/bin
