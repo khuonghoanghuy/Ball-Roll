@@ -454,7 +454,7 @@ class PlayState extends FlxState
                 if (touch.pressed && player.isTouching(FLOOR) && touchJumpCooldown <= 0)
                 {
                     FlxG.sound.play(AssetPaths.jump__ogg);
-                    player.velocity.y = -500;
+                    player.velocity.y = -1000;
                     touchJumpCooldown = 0.25;
                 }
             }
@@ -463,7 +463,7 @@ class PlayState extends FlxState
                 if (touch.pressed && !player.isTouching(FLOOR))
                 {
                     isDiving = true;
-                    player.velocity.y = 750;
+                    player.velocity.y = 1250;
                 }
             }
         }
