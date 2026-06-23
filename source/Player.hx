@@ -24,13 +24,13 @@ class Player extends FlxSprite
         });
         animation.play("idle");
         
-        // #if (mobile || fakeMobile)
-        // acceleration.y = 1500; 
-        // maxVelocity.y = 1200;
-        // #else
+        #if (mobile || fakeMobile)
+        acceleration.y = 1500; 
+        maxVelocity.y = 1200;
+        #else
         acceleration.y = 1000; 
         maxVelocity.y = 700;
-        // #end
+        #end
         updateHitbox();
     }
 
