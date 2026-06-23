@@ -61,7 +61,7 @@
 	<!-- ============================ CUSTOM DEFINES ========================== -->
 	
 	<define name="fakeMobile" if="mobile" />
-	<define name="chooseYourDevice" />
+	<define name="chooseYourDevice" if="html5" />
 	
 	<!-- =========================== ICON ASSETS ============================== -->
 	
