@@ -183,7 +183,7 @@ class PlayState extends FlxState
             camHUD.filters = [new ShaderFilter(Main.chromaticShader)];
         FlxG.cameras.add(camHUD, false);
 
-        if (isMobileMode())
+        if (GameModeHelper.isMobileMode())
         {
             createMobileHUD();
         }
@@ -192,20 +192,11 @@ class PlayState extends FlxState
             createDesktopHUD();
         }
 
-        bossHealthBar = new FlxBar((FlxG.width - 400) / 2, isMobileMode() ? 40 : 20, LEFT_TO_RIGHT, 400, 20, null, "", 0, 100, true);
+        bossHealthBar = new FlxBar((FlxG.width - 400) / 2, GameModeHelper.isMobileMode() ? 40 : 20, LEFT_TO_RIGHT, 400, 20, null, "", 0, 100, true);
         bossHealthBar.createFilledBar(FlxColor.BLACK, FlxColor.RED, true, FlxColor.WHITE);
         bossHealthBar.visible = false;
         bossHealthBar.camera = camHUD;
         add(bossHealthBar);
-    }
-
-    function isMobileMode():Bool
-    {
-        #if mobile
-        return true;
-        #else
-        return FlxG.save.data.gameplayMode == "mobile";
-        #end
     }
 
     function createMobileHUD():Void
@@ -466,7 +457,7 @@ class PlayState extends FlxState
         FlxG.overlap(player, enemyLineUp, onPlayerHitEnemy);
         FlxG.overlap(player, enemyLineDown, onPlayerHitEnemy);
         
-        if (isMobileMode())
+        if (GameModeHelper.isMobileMode())
         {
             handleMobileInput(elapsed);
         }
@@ -639,7 +630,7 @@ class PlayState extends FlxState
         {
             if (touch.x < FlxG.width / 2)
             {
-                if (touch.pressed && player.isTouching(FLOOR) && touchJumpCooldown <= 0)
+                if (touch.justPressed && player.isTouching(FLOOR) && touchJumpCooldown <= 0)
                 {
                     FlxG.sound.play(AssetPaths.jump__ogg);
                     player.velocity.y = -500;

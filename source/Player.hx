@@ -28,27 +28,4 @@ class Player extends FlxSprite
         maxVelocity.y = 700;
         updateHitbox();
     }
-
-    override public function update(elapsed:Float)
-    {
-        var isJumpingPressed:Bool = FlxG.keys.pressed.UP;
-
-        #if (mobile || fakeMobile)
-        for (touch in FlxG.touches.list)
-        {
-            if (touch.x < FlxG.width / 2 && touch.pressed)
-            {
-                isJumpingPressed = true;
-                break;
-            }
-        }
-        #end
-
-        if (velocity.y < 0 && !isJumpingPressed)
-        {
-            velocity.y += 50;
-        }
-
-        super.update(elapsed);
-    }
 }
