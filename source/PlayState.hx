@@ -71,12 +71,8 @@ class PlayState extends FlxState
     var touchRightZone:FlxSprite;
     var jumpHint:FlxSprite;
     var diveHint:FlxSprite;
-    var touchEffects:FlxGroup;
     var touchJumpCooldown:Float = 0;
-    var touchStartY:Float = 0;
-    var isSwiping:Bool = false;
-    var isTouchingLeft:Bool = false;
-    var isTouchingRight:Bool = false;
+    var isDiving:Bool = false;
 
     override public function create()
     {
@@ -212,10 +208,6 @@ class PlayState extends FlxState
         touchRightZone.makeGraphic(Std.int(FlxG.width / 2), Std.int(FlxG.height), FlxColor.TRANSPARENT);
         touchRightZone.camera = camHUD;
         add(touchRightZone);
-
-        touchEffects = new FlxGroup();
-        touchEffects.camera = camHUD;
-        add(touchEffects);
 
         var hudOffsetX:Float = 10;
         var hudOffsetY:Float = 10;
@@ -503,69 +495,51 @@ class PlayState extends FlxState
         {
             if (touch.justPressed)
             {
-                createTouchEffect(touch.x, touch.y);
-                touchStartY = touch.y;
-                isSwiping = true;
-                
                 if (touch.x < FlxG.width / 2)
                 {
-                    isTouchingLeft = true;
+                    if (player.isTouching(FLOOR) && touchJumpCooldown <= 0)
+                    {
+                        FlxG.sound.play(AssetPaths.jump__ogg);
+                        player.velocity.y = -500;
+                        touchJumpCooldown = 0.2;
+                        FlxG.camera.shake(0.01, 0.05);
+                        
+                        if (jumpHint != null)
+                        {
+                            jumpHint.alpha = 0.8;
+                            FlxTween.tween(jumpHint, {alpha: 0.3}, 0.3);
+                        }
+                    }
                 }
                 else
                 {
-                    isTouchingRight = true;
+                    if (!player.isTouching(FLOOR))
+                    {
+                        isDiving = true;
+                        player.velocity.y = 750;
+                        
+                        if (diveHint != null)
+                        {
+                            diveHint.alpha = 0.8;
+                            FlxTween.tween(diveHint, {alpha: 0.3}, 0.3);
+                        }
+                    }
                 }
             }
             
             if (touch.justReleased)
             {
-                if (touch.x < FlxG.width / 2)
+                if (touch.x >= FlxG.width / 2)
                 {
-                    isTouchingLeft = false;
-                }
-                else
-                {
-                    isTouchingRight = false;
-                }
-                
-                var swipeDelta = touch.y - touchStartY;
-                if (swipeDelta > 50 && !player.isTouching(FLOOR))
-                {
-                    player.velocity.y = 750;
-                    createTouchEffect(touch.x, touch.y);
-                    FlxG.camera.shake(0.005, 0.03);
-                }
-                isSwiping = false;
-            }
-            
-            if (touch.x < FlxG.width / 2)
-            {
-                if (touch.justPressed && player.isTouching(FLOOR) && touchJumpCooldown <= 0)
-                {
-                    FlxG.sound.play(AssetPaths.jump__ogg);
-                    player.velocity.y = -500;
-                    touchJumpCooldown = 0.2;
-                    FlxG.camera.shake(0.01, 0.05);
-                    
-                    if (jumpHint != null)
-                    {
-                        jumpHint.alpha = 0.8;
-                        FlxTween.tween(jumpHint, {alpha: 0.3}, 0.3);
-                    }
+                    isDiving = false;
                 }
             }
             
-            if (touch.x >= FlxG.width / 2)
+            if (touch.x >= FlxG.width / 2 && touch.pressed && isDiving)
             {
-                if (!player.isTouching(FLOOR) && touch.justPressed)
+                if (!player.isTouching(FLOOR))
                 {
                     player.velocity.y = 750;
-                    
-                    if (diveHint != null)
-                    {
-                        diveHint.alpha = 0.8;
-                        FlxTween.tween(diveHint, {alpha: 0.3}, 0.3);
-                    }
                 }
             }
         }
@@ -778,24 +752,6 @@ class PlayState extends FlxState
             openSubState(new GameOverSubState(totalScore, timeSecond, timesHitByEnemy));
             return;
         }
-    }
-
-    function createTouchEffect(x:Float, y:Float):Void
-    {
-        #if (mobile || fakeMobile)
-        var effect = new FlxSprite(x - 15, y - 15);
-        effect.makeGraphic(30, 30, FlxColor.WHITE);
-        effect.alpha = 0.5;
-        effect.camera = camHUD;
-        touchEffects.add(effect);
-        
-        FlxTween.tween(effect, {alpha: 0, scale: {x: 2.5, y: 2.5}}, 0.3, {
-            onComplete: function(tween:FlxTween) {
-                effect.kill();
-                touchEffects.remove(effect);
-            }
-        });
-        #end
     }
 
     function checkOrbCollision(group:FlxGroup):Void
