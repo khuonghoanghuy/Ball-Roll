@@ -60,7 +60,7 @@
 
 	<!-- ============================ CUSTOM DEFINES ========================== -->
 	
-	<define name="fakeMobile" />
+	<define name="fakeMobile" if="mobile" />
 	
 	<!-- =========================== ICON ASSETS ============================== -->
 	
