@@ -24,19 +24,32 @@ class Player extends FlxSprite
         });
         animation.play("idle");
         
-        #if (mobile || fakeMobile)
-        acceleration.y = 1500; 
-        maxVelocity.y = 1200;
-        #else
+        // #if (mobile || fakeMobile)
+        // acceleration.y = 1500; 
+        // maxVelocity.y = 1200;
+        // #else
         acceleration.y = 1000; 
         maxVelocity.y = 700;
-        #end
+        // #end
         updateHitbox();
     }
 
     override public function update(elapsed:Float)
     {
-        if (velocity.y < 0 && !FlxG.keys.pressed.UP)
+        var isJumpingPressed:Bool = FlxG.keys.pressed.UP;
+
+        #if (mobile || fakeMobile)
+        for (touch in FlxG.touches.list)
+        {
+            if (touch.pressed && touch.x < FlxG.width / 2)
+            {
+                isJumpingPressed = true;
+                break;
+            }
+        }
+        #end
+
+        if (velocity.y < 0 && !isJumpingPressed)
         {
             velocity.y += 50;
         }
