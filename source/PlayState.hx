@@ -30,7 +30,6 @@ class PlayState extends FlxState
     var enemyLineDown:FlxGroup;
     var spawnTimer:Float = 0;
     var nextSpawnTime:Float = 1.0;
-
     var scoreText:FlxText;
     var totalScore:Int = 0;
     var scoreTimer:Float = 0;
@@ -55,7 +54,6 @@ class PlayState extends FlxState
 
     var camHUD:FlxCamera;
     var floor:FlxBackdrop;
-    
     var currentGlobalSpeed:Float = -400;
     var bossActiveTimer:Float = 0;
     var bossDefeatedCount:Int = 0;
@@ -88,10 +86,6 @@ class PlayState extends FlxState
         EnemyConfig.init();
         BossConfig.init();
 
-        trace("=== PlayState Initialized ===");
-        trace("Enemy Configs Loaded: " + EnemyConfig.SPAWN_CONFIGS.length);
-        trace("Boss Configs Loaded: " + BossConfig.CONFIGS.length);
-
         cloudImages = [
             AssetPaths.cloud0001__png,
             AssetPaths.cloud0002__png,
@@ -113,7 +107,6 @@ class PlayState extends FlxState
             cloud.alpha = 0.5 + Math.random() * 0.4;
             cloudGroup.add(cloud);
         }
-        trace("Clouds Spawned: " + maxClouds);
 
         treeImages = [
             AssetPaths.tree__png,
@@ -136,11 +129,8 @@ class PlayState extends FlxState
             tree.velocity.x = baseEnemySpeed * 0.8;
             treeGroup.add(tree);
         }
-        trace("Trees Spawned: " + maxTree);
 
-        bushImages = [
-            AssetPaths.bush__png
-        ];
+        bushImages = [AssetPaths.bush__png];
         bushGroup = new FlxGroup();
         add(bushGroup);
 
@@ -157,7 +147,6 @@ class PlayState extends FlxState
             bush.velocity.x = baseEnemySpeed * 0.8;
             bushGroup.add(bush);
         }
-        trace("Bushes Spawned: " + maxBush);
 
         invisibleLine = new FlxSprite(0, floorY);
         invisibleLine.makeGraphic(FlxG.width, 20, FlxColor.YELLOW);
@@ -167,8 +156,6 @@ class PlayState extends FlxState
 
         player = new Player(200, floorY - 76); 
         add(player);
-        trace("Player Created at: (" + player.x + ", " + player.y + ")");
-        trace("Player Health: " + player.health);
 
         floor = new FlxBackdrop(AssetPaths.floor__png, X);
         floor.setPosition(0, floorY);
@@ -183,7 +170,6 @@ class PlayState extends FlxState
         dustEmitter.alpha.set(0.8, 1, 0, 0);
         add(dustEmitter);
         dustEmitter.start(false, 0.05);
-        trace("Dust Emitter Started");
 
         enemyLineUp = new FlxGroup();
         add(enemyLineUp);
@@ -196,7 +182,6 @@ class PlayState extends FlxState
         if (FlxG.save.data.shader)
             camHUD.filters = [new ShaderFilter(Main.chromaticShader)];
         FlxG.cameras.add(camHUD, false);
-        trace("HUD Camera Created");
 
         #if (mobile || fakeMobile)
         touchLeftZone = new FlxSprite(0, 0);
@@ -252,7 +237,6 @@ class PlayState extends FlxState
             barrierIcon.updateHitbox();
             barrierIcon.camera = camHUD;
             add(barrierIcon);
-            trace("Barrier UI Created: " + FlxG.save.data.barrier + " charges");
         }
 
         pauseButton = new FlxSprite(FlxG.width - 55, hudOffsetY + 5);
@@ -298,10 +282,6 @@ class PlayState extends FlxState
         diveLabel.alpha = 0.3;
         diveLabel.camera = camHUD;
         add(diveLabel);
-
-        trace("Mobile UI Created");
-        trace("Mobile Mode Active");
-
         #else
         scoreText = new FlxText(FlxG.width - 310, 15, 0, "Score: 0");
         scoreText.setFormat(null, 24, FlxColor.WHITE, RIGHT);
@@ -344,7 +324,6 @@ class PlayState extends FlxState
             barrierIcon.camera = camHUD;
             add(barrierIcon);
         }
-        trace("Desktop UI Created");
         #end
 
         bossHealthBar = new FlxBar((FlxG.width - 400) / 2, #if fakeMobile 40 #else 20 #end, LEFT_TO_RIGHT, 400, 20, null, "", 0, 100, true);
@@ -352,17 +331,11 @@ class PlayState extends FlxState
         bossHealthBar.visible = false;
         bossHealthBar.camera = camHUD;
         add(bossHealthBar);
-
-        trace("=== PlayState Setup Complete ===");
-        trace("Starting Score: " + totalScore);
-        trace("High Score: " + FlxG.save.data.highScore);
-        trace("Next Boss Score: " + nextBossScore);
     }
 
     override public function update(elapsed:Float)
     {
         super.update(elapsed);
-        
         var effectiveTimeSecond:Int = isBossActive ? bossStartTimeSecond : timeSecond;
         var speedMultiplier:Float = 1 + (bossDefeatedCount * 0.1);
         var baseSpeed = baseEnemySpeed - (Std.int(effectiveTimeSecond / 5) * 30);
@@ -383,8 +356,6 @@ class PlayState extends FlxState
                 {
                     cloudSprite.x = FlxG.width + (Math.random() * 100);
                     cloudSprite.y = 30 + Math.random() * 200;
-                    var randomFrame = cloudImages[Std.int(Math.random() * cloudImages.length)];
-                    cloudSprite.loadGraphic(randomFrame);
                 }
             }
         }
@@ -400,8 +371,6 @@ class PlayState extends FlxState
                 {
                     treeSprite.x = FlxG.width + (Math.random() * 100);
                     treeSprite.y = floorY - (48 * 2);
-                    treeSprite.loadGraphic(treeImages[Std.int(Math.random() * treeImages.length)], true, 32, 48);
-                    treeSprite.animation.add("idle", [0, 1, 2, 3], 12, true);
                     treeSprite.animation.play("idle", true);
                 }
             }
@@ -418,8 +387,6 @@ class PlayState extends FlxState
                 {
                     bushSprite.x = FlxG.width + (Math.random() * 100);
                     bushSprite.y = floorY - 26;
-                    bushSprite.loadGraphic(bushImages[Std.int(Math.random() * bushImages.length)], true, 48, 26);
-                    bushSprite.animation.add("idle", [0, 1, 2, 3], 12, true);
                     bushSprite.animation.play("idle", true);
                 }
             }
@@ -432,15 +399,7 @@ class PlayState extends FlxState
         {
             dustEmitter.x = -10 + (player.x + (player.width / 2));
             dustEmitter.y = player.y + player.height - 4;
-            
-            if (player.isTouching(FLOOR))
-            {
-                dustEmitter.emitting = true;
-            }
-            else
-            {
-                dustEmitter.emitting = false;
-            }
+            dustEmitter.emitting = player.isTouching(FLOOR);
         }
 
         displayedScore = GameUtil.lerpInt(displayedScore, totalScore, 1, elapsed);
@@ -456,7 +415,7 @@ class PlayState extends FlxState
             }
         }
         
-        var scoreGainPerSecond:Float = 60; 
+        var scoreGainPerSecond:Float = 60;
         totalScore += Std.int(scoreGainPerSecond * elapsed);
         if (displayedScore > FlxG.save.data.highScore)
         {
@@ -478,10 +437,6 @@ class PlayState extends FlxState
 
             bossHealthBar.setParent(boss, "health", false);
             bossHealthBar.visible = true;
-            trace("=== BOSS SPAWNED ===");
-            trace("Score: " + totalScore + " | Time: " + timeSecond + "s");
-            trace("Difficulty Multiplier: " + bossDifficultyMultiplier);
-            trace("Boss Health: " + boss.health);
         }
 
         FlxG.collide(player, invisibleLine);
@@ -490,7 +445,6 @@ class PlayState extends FlxState
         
         #if (mobile || fakeMobile)
         touchJumpCooldown -= elapsed;
-        
         for (touch in FlxG.touches.list)
         {
             if (touch.justPressed)
@@ -502,13 +456,6 @@ class PlayState extends FlxState
                         FlxG.sound.play(AssetPaths.jump__ogg);
                         player.velocity.y = -500;
                         touchJumpCooldown = 0.2;
-                        FlxG.camera.shake(0.01, 0.05);
-                        
-                        if (jumpHint != null)
-                        {
-                            jumpHint.alpha = 0.8;
-                            FlxTween.tween(jumpHint, {alpha: 0.3}, 0.3);
-                        }
                     }
                 }
                 else
@@ -517,12 +464,6 @@ class PlayState extends FlxState
                     {
                         isDiving = true;
                         player.velocity.y = 750;
-                        
-                        if (diveHint != null)
-                        {
-                            diveHint.alpha = 0.8;
-                            FlxTween.tween(diveHint, {alpha: 0.3}, 0.3);
-                        }
                     }
                 }
             }
@@ -553,7 +494,6 @@ class PlayState extends FlxState
                     pauseButton.animation.play("pressed", true);
                     this.persistentUpdate = false;
                     openSubState(new PauseSubState());
-                    trace("Game Paused");
                     return;
                 }
             }
@@ -574,7 +514,6 @@ class PlayState extends FlxState
         {
             this.persistentUpdate = false;
             openSubState(new PauseSubState());
-            trace("Game Paused");
             return;
         }
         #end
@@ -588,10 +527,6 @@ class PlayState extends FlxState
                 if (eType == null) eType = Normal;
                 
                 spawnCount++;
-                if (spawnCount % 10 == 0) {
-                    trace("Spawn Count: " + spawnCount + " | Time: " + timeSecond + "s");
-                }
-
                 var enemyHeight:Float = 48;
                 var config = Enemy.getConfigForType(eType);
                 
@@ -600,30 +535,24 @@ class PlayState extends FlxState
                     var line = 0;
                     var ex:Float = FlxG.width;
                     var ey:Float = floorY - enemyHeight;
-                    
                     switch (config.spawnPosition)
                     {
                         case "random_line":
                             line = (Math.random() < 0.5) ? 0 : 1;
                             ey = (line == 1) ? (floorY - enemyHeight) : ((floorY - 160) - enemyHeight);
-                            
                         case "up_line":
                             line = 0;
                             ey = floorY - 160 - enemyHeight;
-                            
                         case "down_line":
                             line = 1;
                             ey = floorY - enemyHeight;
-                            
                         case "left_edge":
                             ex = -50;
                             ey = floorY - enemyHeight;
                             line = 1;
-                            
                         case "right_edge":
                             ex = FlxG.width;
                             ey = (line == 1) ? (floorY - enemyHeight) : ((floorY - 160) - enemyHeight);
-                            
                         default:
                             line = (Math.random() < 0.5) ? 0 : 1;
                             ey = (line == 1) ? (floorY - enemyHeight) : ((floorY - 160) - enemyHeight);
@@ -638,7 +567,6 @@ class PlayState extends FlxState
                     for (i in 0...count)
                     {
                         var e = new Enemy(ex + (i * 65), ey, eType);
-                        
                         if (eType == Backward)
                         {
                             e.velocity.x = Math.abs(currentGlobalSpeed) * 0.4;
@@ -655,7 +583,7 @@ class PlayState extends FlxState
                         
                         add(e);
                         if (line == 0) 
-                            enemyLineUp.add(e); 
+                            enemyLineUp.add(e);
                         else 
                             enemyLineDown.add(e);
                     }
@@ -683,14 +611,10 @@ class PlayState extends FlxState
                     boss = null;
                     isBossActive = false;
                     bossDefeatedCount++;
-                    
                     if (totalScore >= nextBossScore) {
                         nextBossScore = Std.int(totalScore / 10000) * 15000 + 15000;
                     }
                     bossHealthBar.visible = false;
-                    trace("=== BOSS DEFEATED ===");
-                    trace("Total Defeated: " + bossDefeatedCount);
-                    trace("New Next Boss Score: " + nextBossScore);
                 }
                 else if (boss.currentPhase == BossPhase.Phase1 || boss.currentPhase == BossPhase.Phase2)
                 {
@@ -745,10 +669,6 @@ class PlayState extends FlxState
         if (player.health <= 0)
         {
             this.persistentUpdate = false;
-            trace("=== GAME OVER ===");
-            trace("Final Score: " + totalScore);
-            trace("Time Survived: " + timeSecond + "s");
-            trace("Times Hit: " + timesHitByEnemy);
             openSubState(new GameOverSubState(totalScore, timeSecond, timesHitByEnemy));
             return;
         }
@@ -765,10 +685,8 @@ class PlayState extends FlxState
                 {
                     enemy.kill();
                     FlxG.sound.play(AssetPaths.hit__ogg);
-                    FlxG.camera.shake(0.015, 0.15);
                     addScore(400);
                     boss.takeDamage(Std.int(10 * bossDifficultyMultiplier));
-                    trace("Orb Hit! Boss Damage: " + Std.int(10 * bossDifficultyMultiplier));
                 }
             }
         }
@@ -803,11 +721,6 @@ class PlayState extends FlxState
         if (player.health < FlxG.save.data.playerHealth)
         {
             player.health += much;
-            trace("Health +" + much + " | New Health: " + player.health);
-        }
-        else
-        {
-            trace("Health Full! Current: " + player.health + "/" + FlxG.save.data.playerHealth);
         }
     }
 
@@ -822,7 +735,6 @@ class PlayState extends FlxState
                 enemy.animation.play("counter");
                 FlxG.sound.play(AssetPaths.select__ogg);
                 addScore(100);
-                trace("Orb Countered!");
             }
             return;
         }
@@ -832,25 +744,21 @@ class PlayState extends FlxState
             FlxG.sound.play(AssetPaths.select__ogg);
             addScore(50);
             addHealth(FlxG.save.data.ballGainHealth);
-            trace("Health Ball Collected!");
             return;
         }
 
         enemy.kill();
         addScore(50);
         FlxG.sound.play(AssetPaths.hit__ogg);
-        
         if (FlxG.save.data.barrier > 0)
         {
             FlxG.save.data.barrier -= 1;
             FlxG.save.flush();
-            trace("Barrier Used! Remaining: " + FlxG.save.data.barrier);
 
             if (FlxG.save.data.barrier <= 0 && barrierBar != null)
             {
                 barrierBar.visible = false;
                 barrierIcon.visible = false;
-                trace("Barrier Depleted!");
             }
         }
         else
@@ -863,9 +771,6 @@ class PlayState extends FlxState
             player.animation.play("get hit", true);
             timesHitByEnemy += 1;
             FlxG.camera.shake(0.005 + (damageAmount / 2000), 0.08 + (damageAmount / 2000));
-            trace("Player Hit! Damage: " + damageAmount + " | Health: " + player.health);
         }
-
-        FlxG.camera.shake(0.005, 0.08);
     }
 }
