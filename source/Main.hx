@@ -18,7 +18,7 @@ class Main extends Sprite
     public function new()
     {
         super();
-        addChild(new FlxGame(0, 0, MenuState, 60, 60, false, false));
+        addChild(new FlxGame(0, 0, #if chooseYourDevice ChooseYourDeviceState #else MenuState #end, 60, 60, false, false));
         FlxG.sound.soundTrayEnabled = false;
 		FlxG.sound.volumeDownKeys = FlxG.sound.volumeUpKeys = null;
 		FlxG.sound.muteKeys = null;

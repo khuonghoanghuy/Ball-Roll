@@ -75,9 +75,8 @@ class SettingSubState extends FlxSubState {
         restartNoticeText.setFormat(null, 13, FlxColor.YELLOW, CENTER);
         restartNoticeText.bold = true;
         
-        // Check if any restart-required setting was changed
         if (SaveData.noticeRestart) {
-            restartNoticeText.text = "⚠ Restart required for changes to take effect";
+            restartNoticeText.text = "Restart required for changes to take effect";
             restartNoticeText.color = FlxColor.ORANGE;
         }
         add(restartNoticeText);

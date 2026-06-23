@@ -35,13 +35,7 @@ class MenuState extends FlxState
         openSubState(new TransitionSubState(true));
 
         bgColor = FlxColor.CYAN;
-        floorY = FlxG.height * 0.625; 
-
-        trace("=== MenuState Initialized ===");
-        trace("Screen Size: " + FlxG.width + "x" + FlxG.height);
-        trace("Floor Y: " + floorY);
-        trace("Cash: " + FlxG.save.data.cash);
-        trace("High Score: " + FlxG.save.data.highScore);
+        floorY = FlxG.height * 0.625;
 
         cloudImages = [
             AssetPaths.cloud0001__png,
@@ -64,7 +58,6 @@ class MenuState extends FlxState
             cloud.alpha = 0.5 + Math.random() * 0.4;
             cloudGroup.add(cloud);
         }
-        trace("Clouds Spawned: " + maxClouds);
 
         logo = new FlxSprite(0, 40, AssetPaths.logo__png);
         logo.scale.set(4, 4);
@@ -74,7 +67,6 @@ class MenuState extends FlxState
         logo.x = 200;
         #end
         add(logo);
-        trace("Logo Created at: (" + logo.x + ", " + logo.y + ")");
 
         ball = new Player(200, floorY - 76);
         ball.acceleration.y = 0; 
@@ -82,13 +74,30 @@ class MenuState extends FlxState
         ball.setGraphicSize(76, 76);
         ball.updateHitbox();
         add(ball);
-        trace("Ball Created at: (" + ball.x + ", " + ball.y + ")");
 
         var floor:FlxSprite = new FlxSprite(0, floorY);
         floor.makeGraphic(FlxG.width, Std.int(FlxG.height - floorY), FlxColor.GREEN);
         add(floor);
 
-        #if (mobile || fakeMobile)
+        generateUI();
+
+        actionTimer = new FlxTimer().start(1.0, chooseRandomAction);
+    }
+
+    function generateUI()
+    {
+        if (GameModeHelper.isMobileMode())
+        {
+            createMobileUI();
+        }
+        else
+        {
+            createDesktopUI();
+        }
+    }
+
+    function createMobileUI() 
+    {
         var btnX:Float = FlxG.width / 2 + 100;
         var btnWidth:Int = 250;
         var btnHeight:Int = 75;
@@ -131,10 +140,10 @@ class MenuState extends FlxState
         settingButton.scale.set(scaleSet, scaleSet);
         settingButton.updateHitbox();
         add(settingButton);
+    }
 
-        trace("Mobile/Menu UI Created (Centered)");
-
-        #else
+    function createDesktopUI() 
+    {
         var btnX:Float = FlxG.width - 350;
         var btnWidth:Int = 250;
         var btnHeight:Int = 75;
@@ -168,13 +177,7 @@ class MenuState extends FlxState
         settingButton.animation.add("hover", [1]);
         settingButton.animation.add("selected", [0, 1, 0, 1], 12, true);
         settingButton.animation.play("idle");
-        add(settingButton);
-
-        trace("Desktop UI Created");
-        #end
-
-        actionTimer = new FlxTimer().start(1.0, chooseRandomAction);
-        trace("=== MenuState Setup Complete ===");
+        add(settingButton);    
     }
 
     function chooseRandomAction(timer:FlxTimer):Void

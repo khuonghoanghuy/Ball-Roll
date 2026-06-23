@@ -8,7 +8,7 @@
 	<app title="Ball Roll" 
 	     file="ballRoll" 
 	     main="Main" 
-	     version="1.0.0" 
+	     version="1.0.1" 
 	     company="Huy1234TH" />
 	
 	<app preloader="flixel.system.FlxPreloader" />
@@ -61,6 +61,7 @@
 	<!-- ============================ CUSTOM DEFINES ========================== -->
 	
 	<define name="fakeMobile" if="mobile" />
+	<define name="chooseYourDevice" />
 	
 	<!-- =========================== ICON ASSETS ============================== -->
 	

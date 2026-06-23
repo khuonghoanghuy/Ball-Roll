@@ -62,6 +62,13 @@ class SaveData
         if (FlxG.save.data.shader == null) {
             FlxG.save.data.shader = false;
         }
+        if (FlxG.save.data.gameplayMode == null) {
+            #if mobile
+            FlxG.save.data.gameplayMode = "mobile";
+            #else
+            FlxG.save.data.gameplayMode = "desktop";
+            #end
+        }
 
         FlxG.sound.volume = FlxG.save.data.volume;
         FlxG.sound.muted = FlxG.save.data.muted;

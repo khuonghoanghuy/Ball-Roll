@@ -183,7 +183,33 @@ class PlayState extends FlxState
             camHUD.filters = [new ShaderFilter(Main.chromaticShader)];
         FlxG.cameras.add(camHUD, false);
 
-        #if (mobile || fakeMobile)
+        if (isMobileMode())
+        {
+            createMobileHUD();
+        }
+        else
+        {
+            createDesktopHUD();
+        }
+
+        bossHealthBar = new FlxBar((FlxG.width - 400) / 2, isMobileMode() ? 40 : 20, LEFT_TO_RIGHT, 400, 20, null, "", 0, 100, true);
+        bossHealthBar.createFilledBar(FlxColor.BLACK, FlxColor.RED, true, FlxColor.WHITE);
+        bossHealthBar.visible = false;
+        bossHealthBar.camera = camHUD;
+        add(bossHealthBar);
+    }
+
+    function isMobileMode():Bool
+    {
+        #if mobile
+        return true;
+        #else
+        return FlxG.save.data.gameplayMode == "mobile";
+        #end
+    }
+
+    function createMobileHUD():Void
+    {
         touchLeftZone = new FlxSprite(0, 0);
         touchLeftZone.makeGraphic(Std.int(FlxG.width / 2), Std.int(FlxG.height), FlxColor.TRANSPARENT);
         touchLeftZone.camera = camHUD;
@@ -282,7 +308,10 @@ class PlayState extends FlxState
         diveLabel.alpha = 0.3;
         diveLabel.camera = camHUD;
         add(diveLabel);
-        #else
+    }
+
+    function createDesktopHUD():Void
+    {
         scoreText = new FlxText(FlxG.width - 310, 15, 0, "Score: 0");
         scoreText.setFormat(null, 24, FlxColor.WHITE, RIGHT);
         scoreText.setBorderStyle(OUTLINE, FlxColor.BLACK, 2);
@@ -324,18 +353,12 @@ class PlayState extends FlxState
             barrierIcon.camera = camHUD;
             add(barrierIcon);
         }
-        #end
-
-        bossHealthBar = new FlxBar((FlxG.width - 400) / 2, #if fakeMobile 40 #else 20 #end, LEFT_TO_RIGHT, 400, 20, null, "", 0, 100, true);
-        bossHealthBar.createFilledBar(FlxColor.BLACK, FlxColor.RED, true, FlxColor.WHITE);
-        bossHealthBar.visible = false;
-        bossHealthBar.camera = camHUD;
-        add(bossHealthBar);
     }
 
     override public function update(elapsed:Float)
     {
         super.update(elapsed);
+        
         var effectiveTimeSecond:Int = isBossActive ? bossStartTimeSecond : timeSecond;
         var speedMultiplier:Float = 1 + (bossDefeatedCount * 0.1);
         var baseSpeed = baseEnemySpeed - (Std.int(effectiveTimeSecond / 5) * 30);
@@ -443,63 +466,14 @@ class PlayState extends FlxState
         FlxG.overlap(player, enemyLineUp, onPlayerHitEnemy);
         FlxG.overlap(player, enemyLineDown, onPlayerHitEnemy);
         
-        #if (mobile || fakeMobile)
-        touchJumpCooldown -= elapsed;
-        isDiving = false;
-
-        for (touch in FlxG.touches.list)
+        if (isMobileMode())
         {
-            if (touch.x < FlxG.width / 2)
-            {
-                if (touch.pressed && player.isTouching(FLOOR) && touchJumpCooldown <= 0)
-                {
-                    FlxG.sound.play(AssetPaths.jump__ogg);
-                    player.velocity.y = -500;
-                    touchJumpCooldown = 0.15;
-                }
-            }
-            else
-            {
-                if (touch.pressed && !player.isTouching(FLOOR))
-                {
-                    isDiving = true;
-                    player.velocity.y = 750;
-                }
-            }
+            handleMobileInput(elapsed);
         }
-        
-        if (pauseButton != null)
+        else
         {
-            for (touch in FlxG.touches.justReleased())
-            {
-                if (touch.overlaps(pauseButton))
-                {
-                    pauseButton.animation.play("pressed", true);
-                    this.persistentUpdate = false;
-                    openSubState(new PauseSubState());
-                    return;
-                }
-            }
+            handleDesktopInput(elapsed);
         }
-        #else
-        if (FlxG.keys.justPressed.UP && player.isTouching(FLOOR))
-        {
-            FlxG.sound.play(AssetPaths.jump__ogg);
-            player.velocity.y = -500;
-        }
-        
-        if (FlxG.keys.justPressed.DOWN && !player.isTouching(FLOOR))
-        {
-            player.velocity.y = 750;
-        }
-        
-        if (FlxG.keys.justPressed.ESCAPE)
-        {
-            this.persistentUpdate = false;
-            openSubState(new PauseSubState());
-            return;
-        }
-        #end
 
         if (!isBossActive)
         {
@@ -652,6 +626,68 @@ class PlayState extends FlxState
         {
             this.persistentUpdate = false;
             openSubState(new GameOverSubState(totalScore, timeSecond, timesHitByEnemy));
+            return;
+        }
+    }
+
+    function handleMobileInput(elapsed:Float):Void
+    {
+        touchJumpCooldown -= elapsed;
+        isDiving = false;
+
+        for (touch in FlxG.touches.list)
+        {
+            if (touch.x < FlxG.width / 2)
+            {
+                if (touch.pressed && player.isTouching(FLOOR) && touchJumpCooldown <= 0)
+                {
+                    FlxG.sound.play(AssetPaths.jump__ogg);
+                    player.velocity.y = -500;
+                    touchJumpCooldown = 0.15;
+                }
+            }
+            else
+            {
+                if (touch.pressed && !player.isTouching(FLOOR))
+                {
+                    isDiving = true;
+                    player.velocity.y = 750;
+                }
+            }
+        }
+        
+        if (pauseButton != null)
+        {
+            for (touch in FlxG.touches.justReleased())
+            {
+                if (touch.overlaps(pauseButton))
+                {
+                    pauseButton.animation.play("pressed", true);
+                    this.persistentUpdate = false;
+                    openSubState(new PauseSubState());
+                    return;
+                }
+            }
+        }
+    }
+
+    function handleDesktopInput(elapsed:Float):Void
+    {
+        if (FlxG.keys.justPressed.UP && player.isTouching(FLOOR))
+        {
+            FlxG.sound.play(AssetPaths.jump__ogg);
+            player.velocity.y = -500;
+        }
+        
+        if (FlxG.keys.justPressed.DOWN && !player.isTouching(FLOOR))
+        {
+            player.velocity.y = 750;
+        }
+        
+        if (FlxG.keys.justPressed.ESCAPE)
+        {
+            this.persistentUpdate = false;
+            openSubState(new PauseSubState());
             return;
         }
     }
