@@ -55,3 +55,50 @@ jobs:
         publish_dir: ./export/html5/bin
         force_orphan: true
       if: github.ref == 'refs/heads/main'
+
+  build-desktop:
+    name: Build Hashlink (${{ matrix.os }})
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Haxe
+      uses: krdlab/setup-haxe@v1
+      with:
+        haxe-version: 4.3.6
+
+    - name: Cache Haxe Libraries
+      uses: actions/cache@v4
+      id: cache-haxelib
+      with:
+        path: ~/haxelib
+        key: ${{ matrix.os }}-haxelib-v1
+
+    - name: Install Haxe Libraries
+      if: steps.cache-haxelib.outputs.cache-hit != 'true'
+      run: |
+        haxelib setup ~/haxelib
+        haxelib install lime --quiet
+        haxelib install openfl --quiet
+        haxelib install flixel --quiet
+        haxelib install flixel-addons --quiet
+        haxelib install flixel-ui --quiet
+
+    - name: Setup Lime
+      run: |
+        haxelib setup ~/haxelib
+        haxelib run lime setup --quiet
+
+    - name: Build Hashlink Game
+      run: haxelib run lime build hl -final
+
+    - name: Upload Desktop Artifacts
+      uses: actions/artifacts@v4
+      with:
+        name: game-${{ matrix.os }}-hashlink
+        path: export/hl/bin
