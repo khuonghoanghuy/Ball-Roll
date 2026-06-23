@@ -1,0 +1,40 @@
+{
+    "settings": [
+        {
+            "id": "volume",
+            "name": "Master Volume",
+            "description": "Adjust game sound volume",
+            "type": "slider",
+            "defaultValue": 1.0,
+            "minValue": 0.0,
+            "maxValue": 1.0,
+            "step": 0.1,
+            "saveKey": "volume",
+            "requireRestart": false
+        },
+        {
+            "id": "muted",
+            "name": "Mute",
+            "description": "Toggle all sound on/off",
+            "type": "toggle",
+            "defaultValue": false,
+            "minValue": null,
+            "maxValue": null,
+            "step": null,
+            "saveKey": "muted",
+            "requireRestart": false
+        },
+        {
+            "id": "shader",
+            "name": "Shader",
+            "description": "Toggle shader effect on/off",
+            "type": "toggle",
+            "defaultValue": false,
+            "minValue": null,
+            "maxValue": null,
+            "step": null,
+            "saveKey": "shader",
+            "requireRestart": true
+        }
+    ]
+}
