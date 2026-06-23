@@ -451,11 +451,11 @@ class PlayState extends FlxState
         {
             if (touch.x < FlxG.width / 2)
             {
-                if (touch.justPressed && player.isTouching(FLOOR) && touchJumpCooldown <= 0)
+                if (touch.pressed && player.isTouching(FLOOR) && touchJumpCooldown <= 0)
                 {
                     FlxG.sound.play(AssetPaths.jump__ogg);
                     player.velocity.y = -500;
-                    touchJumpCooldown = 1;
+                    touchJumpCooldown = 0.2;
                 }
             }
             else
