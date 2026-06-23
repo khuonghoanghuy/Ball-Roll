@@ -482,14 +482,16 @@ class PlayState extends FlxState
                     var line = 0;
                     var ex:Float = FlxG.width;
                     var ey:Float = floorY - enemyHeight;
+                    var spacingLine1:Int = 140;
+
                     switch (config.spawnPosition)
                     {
                         case "random_line":
                             line = (Math.random() < 0.5) ? 0 : 1;
-                            ey = (line == 1) ? (floorY - enemyHeight) : ((floorY - 160) - enemyHeight);
+                            ey = (line == 1) ? (floorY - enemyHeight) : ((floorY - spacingLine1) - enemyHeight);
                         case "up_line":
                             line = 0;
-                            ey = floorY - 160 - enemyHeight;
+                            ey = floorY - spacingLine1 - enemyHeight;
                         case "down_line":
                             line = 1;
                             ey = floorY - enemyHeight;
@@ -499,10 +501,10 @@ class PlayState extends FlxState
                             line = 1;
                         case "right_edge":
                             ex = FlxG.width;
-                            ey = (line == 1) ? (floorY - enemyHeight) : ((floorY - 160) - enemyHeight);
+                            ey = (line == 1) ? (floorY - enemyHeight) : ((floorY - spacingLine1) - enemyHeight);
                         default:
                             line = (Math.random() < 0.5) ? 0 : 1;
-                            ey = (line == 1) ? (floorY - enemyHeight) : ((floorY - 160) - enemyHeight);
+                            ey = (line == 1) ? (floorY - enemyHeight) : ((floorY - spacingLine1) - enemyHeight);
                     }
                     
                     var count:Int = config.minCount;
@@ -779,6 +781,7 @@ class PlayState extends FlxState
             player.health -= damageAmount;
             player.animation.play("get hit", true);
             timesHitByEnemy += 1;
+            camera.shake(0.01, 0.2);
         }
     }
 }

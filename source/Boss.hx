@@ -182,7 +182,7 @@ class Boss extends FlxSprite {
     function startDeath():Void {
         isDying = true;
         deathTimer = 0;
-        FlxG.camera.shake(0.05, 0.5);
+        FlxG.camera.shake(0.02, 0.5);
     }
 
     public function takeDamage(amount:Float):Void {
