@@ -24,13 +24,8 @@ class Player extends FlxSprite
         });
         animation.play("idle");
         
-        #if (mobile || fakeMobile)
-        acceleration.y = 1500; 
-        maxVelocity.y = 1200;
-        #else
         acceleration.y = 1000; 
         maxVelocity.y = 700;
-        #end
         updateHitbox();
     }
 
@@ -41,7 +36,7 @@ class Player extends FlxSprite
         #if (mobile || fakeMobile)
         for (touch in FlxG.touches.list)
         {
-            if (touch.pressed && touch.x < FlxG.width / 2)
+            if (touch.x < FlxG.width / 2 && touch.pressed)
             {
                 isJumpingPressed = true;
                 break;
