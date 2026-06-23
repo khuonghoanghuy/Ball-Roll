@@ -75,6 +75,8 @@ class PlayState extends FlxState
     var touchJumpCooldown:Float = 0;
     var touchStartY:Float = 0;
     var isSwiping:Bool = false;
+    var isTouchingLeft:Bool = false;
+    var isTouchingRight:Bool = false;
 
     override public function create()
     {
@@ -499,16 +501,46 @@ class PlayState extends FlxState
         
         for (touch in FlxG.touches.list)
         {
-            if (touch.pressed)
+            if (touch.justPressed)
             {
                 createTouchEffect(touch.x, touch.y);
                 touchStartY = touch.y;
                 isSwiping = true;
+                
+                if (touch.x < FlxG.width / 2)
+                {
+                    isTouchingLeft = true;
+                }
+                else
+                {
+                    isTouchingRight = true;
+                }
+            }
+            
+            if (touch.justReleased)
+            {
+                if (touch.x < FlxG.width / 2)
+                {
+                    isTouchingLeft = false;
+                }
+                else
+                {
+                    isTouchingRight = false;
+                }
+                
+                var swipeDelta = touch.y - touchStartY;
+                if (swipeDelta > 50 && !player.isTouching(FLOOR))
+                {
+                    player.velocity.y = 750;
+                    createTouchEffect(touch.x, touch.y);
+                    FlxG.camera.shake(0.005, 0.03);
+                }
+                isSwiping = false;
             }
             
             if (touch.x < FlxG.width / 2)
             {
-                if (touch.pressed && player.isTouching(FLOOR) && touchJumpCooldown <= 0)
+                if (touch.justPressed && player.isTouching(FLOOR) && touchJumpCooldown <= 0)
                 {
                     FlxG.sound.play(AssetPaths.jump__ogg);
                     player.velocity.y = -500;
@@ -521,40 +553,20 @@ class PlayState extends FlxState
                         FlxTween.tween(jumpHint, {alpha: 0.3}, 0.3);
                     }
                 }
-                
-                /*if (touch.phase == MOVING && player.velocity.y < 0 && touch.x < FlxG.width / 2)
-                {
-                    player.velocity.y = -500 * 0.7;
-                }*/
             }
             
             if (touch.x >= FlxG.width / 2)
             {
-                if (!player.isTouching(FLOOR))
-                {
-                    if (touch.pressed)
-                    {
-                        player.velocity.y = 750;
-                        
-                        if (diveHint != null && touch.pressed)
-                        {
-                            diveHint.alpha = 0.8;
-                            FlxTween.tween(diveHint, {alpha: 0.3}, 0.3);
-                        }
-                    }
-                }
-            }
-            
-            if (touch.justReleased && isSwiping)
-            {
-                var swipeDelta = touch.y - touchStartY;
-                if (swipeDelta > 50 && !player.isTouching(FLOOR))
+                if (!player.isTouching(FLOOR) && touch.justPressed)
                 {
                     player.velocity.y = 750;
-                    createTouchEffect(touch.x, touch.y);
-                    FlxG.camera.shake(0.005, 0.03);
+                    
+                    if (diveHint != null)
+                    {
+                        diveHint.alpha = 0.8;
+                        FlxTween.tween(diveHint, {alpha: 0.3}, 0.3);
+                    }
                 }
-                isSwiping = false;
             }
         }
         
