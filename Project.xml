@@ -51,9 +51,6 @@
 	<!-- In case you want to use the ui package -->
 	<haxelib name="flixel-ui" />
 
-	<!-- In case you want to use the tools package -->
-	<haxelib name="flixel-tools" />
-
 	<!-- In case you want Android support -->
 	<haxelib name="extension-androidtools" if="android" />
 

@@ -1,0 +1,93 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - target: windows
+            title: Windows
+            runs-on: windows-latest
+          - target: macos
+            title: Mac
+            runs-on: macos-14
+          - target: linux
+            title: Linux
+            runs-on: ubuntu-latest
+
+    name: build${{ matrix.title }}
+    runs-on: ${{ matrix.runs-on }}
+
+    steps:
+      - uses: actions/checkout@main
+
+      - uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: 4.3.7
+
+      - name: Install hxpkg
+        run: haxelib install hxpkg
+
+      - name: Restore Previous Cache
+        id: cache-build-restore
+        uses: actions/cache/restore@main
+        with:
+          path: |
+            .haxelib/
+            export/release/hl/haxe/
+            export/release/hl/obj/
+          key: cache-${{ matrix.target }}-release
+
+      - name: Set Cache Status | In Windows
+        id: cache-status-windows
+        if: matrix.target == 'windows'
+        run: echo CACHE_HIT=${{ steps.cache-build-restore.outputs.cache-hit }} | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8
+        shell: powershell
+
+      - name: Set Cache Status | In Unix
+        id: cache-status-unix
+        if: matrix.target != 'windows'
+        run: echo "CACHE_HIT=${{ steps.cache-build-restore.outputs.cache-hit }}" >> $GITHUB_ENV
+
+      - name: Installing Libraries
+        run: haxelib run hxpkg install
+
+      - name: Create Version Tag
+        run: echo "${{github.run_id}}" > VERSION
+
+      - name: Compile
+        run: haxelib run lime build hl -final
+
+      - name: Clear Previous Cache
+        uses: actions/github-script@main
+        with:
+          script: await require('./actions/cache/clear-cache.js')({github, context}, 'cache-${{ matrix.target }}-release');
+
+      - name: Save Current Cache
+        uses: actions/cache@main
+        with:
+          key: cache-${{ matrix.target }}-release
+          path: |
+            .haxelib/
+            export/release/hl/haxe/
+            export/release/hl/obj/
+          restore-keys: |
+            cache-${{ matrix.target }}-release
+
+      - name: Tar files
+        if: matrix.target == 'macos'
+        run: tar -zcvf Template.tar.gz export/release/hl/bin
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: ${{ matrix.target }}Build
+          path: export/release/hl/bin

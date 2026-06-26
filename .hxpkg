@@ -1,0 +1,27 @@
+[
+	{
+		"profile": "default",
+		"pkgs": [
+			{
+				"name": "flixel",
+				"version": "6.1.2"
+			},
+			{
+				"name": "flixel-addons",
+				"version": "4.0.1"
+			},
+			{
+				"name": "flixel-ui",
+				"version": "2.6.4"
+			},
+			{
+				"name": "openfl",
+				"version": "9.5.2"
+			},
+			{
+				"name": "lime",
+				"version": "8.3.2"
+			}
+		]
+	}
+]
