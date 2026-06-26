@@ -1,4 +1,4 @@
-package;
+package game.paths;
 
 #if sys
 import sys.FileSystem;
