@@ -33,9 +33,6 @@ jobs:
         with:
           haxe-version: 4.3.7
 
-      - name: Install hxpkg
-        run: haxelib install hxpkg
-
       - name: Restore Previous Cache
         id: cache-build-restore
         uses: actions/cache/restore@main
@@ -58,7 +55,9 @@ jobs:
         run: echo "CACHE_HIT=${{ steps.cache-build-restore.outputs.cache-hit }}" >> $GITHUB_ENV
 
       - name: Installing Libraries
-        run: haxelib run hxpkg install
+        run:
+          haxelib install hxpkg 
+          haxelib run hxpkg install
 
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
