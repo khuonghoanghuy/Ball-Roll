@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.util.FlxColor;
 import game.states.GameState;
+import flixel.math.FlxRect;
 
 class MenuState extends GameState
 {
@@ -19,6 +20,7 @@ class MenuState extends GameState
 
 		player.scale.set(3, 3);
 		player.updateHitbox();
+		player.y = FlxG.height * 0.625 - (32 * 3);
 		add(player);
 
 		add(versionText);
