@@ -55,7 +55,7 @@ jobs:
         run: echo "CACHE_HIT=${{ steps.cache-build-restore.outputs.cache-hit }}" >> $GITHUB_ENV
 
       - name: Installing Libraries
-        run:
+        run: |
           haxelib install hxpkg 
           haxelib run hxpkg install
 
