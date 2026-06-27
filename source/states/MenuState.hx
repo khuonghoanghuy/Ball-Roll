@@ -1,5 +1,7 @@
 package states;
 
+import haxe.rtti.CType.Rights;
+import game.data.SaveData;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import game.objects.Player;
@@ -14,9 +16,13 @@ class MenuState extends GameState
 	var versionText:BRText = new BRText(20, FlxG.height - 40, 0, "Version Game: " + FlxG.stage.window.application.meta.get("version"), 12, LEFT);
 	var player:Player = new Player(100, 100);
 	var floor:BRSprite = new BRSprite(false, 0, FlxG.height * 0.625, "background/grass floor");
-	var arrowShop:BRSprite = new BRSprite(true, 0, 0, "menu/arrow hint", 32, 32);
 	var logo:BRSprite = new BRSprite(false, 0, 0, "menu/logo");
+
+	var arrowShop:BRSprite = new BRSprite(true, 0, 0, "menu/arrow hint", 32, 32);
 	var shopText:BRText = new BRText(0, 0, 0, "PRESS LEFT TO OPEN SHOP", 12, LEFT);
+
+	var arrowPlay:BRSprite = new BRSprite(true, 0, 0, "menu/arrow hint", 32, 32);
+	var playText:BRText = new BRText(0, 0, 0, "PRESS RIGHT TO PLAY", 12, RIGHT);
 
 	public static var isBackFromShop:Bool = false;
 	var syncTime:Float = 1.5;
@@ -24,6 +30,8 @@ class MenuState extends GameState
 
 	override public function create():Void
 	{
+		SaveData.init();
+
 		super.create();
 		add(background);
 
@@ -64,7 +72,7 @@ class MenuState extends GameState
 		add(player);
 		add(logo);
 
-		arrowShop.addAnim("idle", [0, 1, 2, 3, 4], true, 12);
+		arrowShop.addAnim("idle", [0, 1, 2, 3, 4], true, 8);
 		arrowShop.playAnim("idle", true);
 		arrowShop.scale.set(4, 4);
 		arrowShop.screenCenter(Y);
@@ -78,6 +86,22 @@ class MenuState extends GameState
 		add(shopText);
 
 		startArrowAnimation(arrowShop, shopText);
+
+		arrowPlay.addAnim("idle", [0, 1, 2, 3, 4], true, 8);
+		arrowPlay.playAnim("idle", true);
+		arrowPlay.scale.set(4, 4);
+		arrowPlay.screenCenter(Y);
+		arrowPlay.updateHitbox();
+		arrowPlay.flipX = true;
+		arrowPlay.x = FlxG.width - 200;
+		arrowPlay.y -= 75;
+		add(arrowPlay);
+
+		playText.x = FlxG.width - 250;
+		playText.y = arrowPlay.y + arrowPlay.height - 45;
+		add(playText);
+
+		startArrowAnimation(arrowPlay, playText);
 
 		add(versionText);
 	}
@@ -132,8 +156,12 @@ class MenuState extends GameState
 	{
 		stopKey = true;
 		FlxTween.cancelTweensOf(logo);
-		FlxTween.cancelTweensOf(arrowShop);
 		FlxTween.cancelTweensOf(player);
+
+		FlxTween.cancelTweensOf(arrowShop);
+		FlxTween.cancelTweensOf(shopText);
+		FlxTween.cancelTweensOf(arrowPlay);
+		FlxTween.cancelTweensOf(playText);
 
 		var targetLogoY:Float = 38;
 
@@ -143,13 +171,14 @@ class MenuState extends GameState
 
 		FlxTween.tween(arrowShop, {alpha: 0, y: arrowShop.y + 20}, 0.4 * syncTime, {ease: FlxEase.sineIn});
 		FlxTween.tween(shopText, {alpha: 0, y: shopText.y + 20}, 0.4 * syncTime, {ease: FlxEase.sineIn});
+		FlxTween.tween(arrowPlay, {alpha: 0, y: arrowPlay.y + 20}, 0.4 * syncTime, {ease: FlxEase.sineIn});
+		FlxTween.tween(playText, {alpha: 0, y: playText.y + 20}, 0.4 * syncTime, {ease: FlxEase.sineIn});
 
 		FlxTween.tween(player, {x: -200, angle: -720}, 0.55 * syncTime, {
 			ease: FlxEase.backIn, 
 			startDelay: 0.05 * syncTime,
 			onComplete: function (tween:FlxTween) {
-				MenuState.isBackFromShop = true;
-				switchState(new MenuState());
+				switchState(new ShopState());
 			}
 		});
 	}

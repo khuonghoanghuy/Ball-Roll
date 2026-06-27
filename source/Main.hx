@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import openfl.Lib;
 import flixel.FlxGame;
 import openfl.display.Sprite;
@@ -46,5 +47,8 @@ class Main extends Sprite
 
 		addChild(new FlxGame(config.gameDimensions[0], config.gameDimensions[1], config.initialState, #if (flixel < "5.0.0") config.zoom, #end
 			config.framerate, config.framerate, config.skipSplash, config.startFullscreen));
+
+		FlxG.sound.soundTrayEnabled = false;
+		FlxG.sound.volumeDownKeys = FlxG.sound.volumeUpKeys = FlxG.sound.muteKeys = null;
 	}
 }
