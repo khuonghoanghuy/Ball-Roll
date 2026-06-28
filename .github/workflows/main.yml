@@ -92,9 +92,9 @@ jobs:
 
       - name: Setup Lime with downloaded HashLink (Windows)
         if: matrix.target == 'windows'
-        shell: cmd
+        shell: pwsh
         run: |
-          echo %HL_PATH% | haxelib run lime setup hl
+          Write-Output "$env:HL_PATH" | haxelib run lime setup hl
 
       - name: Setup Lime with downloaded HashLink (macOS/Linux)
         if: matrix.target != 'windows'
@@ -106,7 +106,9 @@ jobs:
         run: echo "${{github.run_id}}" > VERSION
 
       - name: Compile
-        run: haxelib run lime build hl -final
+        shell: bash
+        run: |
+          haxelib run lime build hl -final
 
       - name: Tar files (macOS)
         if: contains(matrix.target, 'macos')
