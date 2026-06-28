@@ -17,11 +17,6 @@ jobs:
             runs-on: windows-latest
             hl-pattern: "hashlink-latest-win64.zip"
             hl-bin: "hl.exe"
-          - target: macos-arm64
-            title: Mac (ARM64)
-            runs-on: macos-14
-            hl-pattern: "hashlink-latest-darwin-arm64.tar.gz"
-            hl-bin: "hl"
           - target: macos-x64
             title: Mac (x64)
             runs-on: macos-13
@@ -39,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@main
 
-      - name: Download HashLink nightly
+      - name: Download HashLink nightly (pre-release)
         uses: robinraju/release-downloader@v1.10
         with:
           repository: "HaxeFoundation/hashlink"
@@ -47,11 +42,11 @@ jobs:
           fileName: "${{ matrix.hl-pattern }}"
           extract: true
           out-file-path: "./hashlink"
+          pre-release: true
 
       - name: Find and set HashLink path
         shell: bash
         run: |
-          # Find the extracted directory (it will be hashlink-latest-*)
           HL_DIR=$(find ./hashlink -type d -name "hashlink-latest-*" | head -n 1)
           if [ -z "$HL_DIR" ]; then
             # If no hashlink-latest-* folder, try hashlink-* pattern
@@ -60,7 +55,6 @@ jobs:
           echo "HL_PATH=$(pwd)/$HL_DIR" >> $GITHUB_ENV
           echo "HL_BIN=$HL_DIR/${{ matrix.hl-bin }}" >> $GITHUB_ENV
           
-          # Debug: Show what we found
           echo "Found HashLink at: $HL_DIR"
           ls -la "$HL_DIR"
 
