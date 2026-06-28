@@ -3,3 +3,4 @@ export/
 .haxelib/
 .DS_Store
 dump/*
+hashlink/*

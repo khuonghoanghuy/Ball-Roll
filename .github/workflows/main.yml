@@ -67,10 +67,8 @@ jobs:
         run: |
           HL_PATH="$(pwd)/hashlink"
           
-          # On Windows, convert Unix-style path to Windows-style for Lime
           if [[ "${{ runner.os }}" == "Windows" ]]; then
-            # Convert /d/a/path to D:/a/path format
-            HL_PATH_WIN=$(echo "$HL_PATH" | sed 's|^/\([a-zA-Z]\)/|\1:/|')
+            HL_PATH_WIN=$(echo "$HL_PATH" | sed 's|^/\([a-zA-Z]\)/|\U\1:/|')
             echo "HL_PATH=$HL_PATH_WIN" >> $GITHUB_ENV
           else
             echo "HL_PATH=$HL_PATH" >> $GITHUB_ENV
@@ -120,8 +118,16 @@ jobs:
           name: ${{ matrix.target }}Build
           path: export/release/hl/bin
 
-      - name: Cleanup HashLink
-        if: always()
+      - name: Cleanup HashLink (Windows)
+        if: matrix.target == 'windows'
+        shell: cmd
+        run: |
+          if exist .\hashlink rmdir /s /q .\hashlink
+          echo "HashLink downloaded files removed"
+
+      - name: Cleanup HashLink (macOS/Linux)
+        if: matrix.target != 'windows'
+        shell: bash
         run: |
           rm -rf ./hashlink
           echo "HashLink downloaded files removed"
