@@ -67,7 +67,15 @@ jobs:
         run: |
           HL_PATH="$(pwd)/hashlink"
           
-          echo "HL_PATH=$HL_PATH" >> $GITHUB_ENV
+          # On Windows, convert Unix-style path to Windows-style for Lime
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            # Convert /d/a/path to D:/a/path format
+            HL_PATH_WIN=$(echo "$HL_PATH" | sed 's|^/\([a-zA-Z]\)/|\1:/|')
+            echo "HL_PATH=$HL_PATH_WIN" >> $GITHUB_ENV
+          else
+            echo "HL_PATH=$HL_PATH" >> $GITHUB_ENV
+          fi
+          
           echo "HL_BIN=$HL_PATH/${{ matrix.hl-bin }}" >> $GITHUB_ENV
           
           echo "HashLink path: $HL_PATH"
@@ -84,7 +92,14 @@ jobs:
           haxelib install hxpkg 
           haxelib run hxpkg install
 
-      - name: Setup Lime with downloaded HashLink
+      - name: Setup Lime with downloaded HashLink (Windows)
+        if: matrix.target == 'windows'
+        shell: cmd
+        run: |
+          echo %HL_PATH% | haxelib run lime setup hl
+
+      - name: Setup Lime with downloaded HashLink (macOS/Linux)
+        if: matrix.target != 'windows'
         shell: bash
         run: |
           echo "${{ env.HL_PATH }}" | haxelib run lime setup hl
