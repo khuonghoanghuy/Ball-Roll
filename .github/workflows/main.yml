@@ -70,11 +70,11 @@ jobs:
           if [[ "${{ runner.os }}" == "Windows" ]]; then
             HL_PATH_WIN=$(echo "$HL_PATH" | sed 's|^/\([a-zA-Z]\)/|\U\1:/|')
             echo "HL_PATH=$HL_PATH_WIN" >> $GITHUB_ENV
+            echo "HL_BIN=$HL_PATH_WIN/${{ matrix.hl-bin }}" >> $GITHUB_ENV
           else
             echo "HL_PATH=$HL_PATH" >> $GITHUB_ENV
+            echo "HL_BIN=$HL_PATH/${{ matrix.hl-bin }}" >> $GITHUB_ENV
           fi
-          
-          echo "HL_BIN=$HL_PATH/${{ matrix.hl-bin }}" >> $GITHUB_ENV
           
           echo "HashLink path: $HL_PATH"
           echo "HashLink binary: $HL_PATH/${{ matrix.hl-bin }}"
