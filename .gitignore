@@ -1,6 +1,1 @@
-export/
-.vscode/*
-.haxelib/
-.DS_Store
-dump/*
-hashlink/*
+/export

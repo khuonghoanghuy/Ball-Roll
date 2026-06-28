@@ -1,94 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project>
+<project xmlns="http://lime.software/project/1.0.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://lime.software/project/1.0.2 http://lime.software/xsd/project-1.0.2.xsd">
 
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Ball Roll" packageName="com.huy1234th.ballroll"
-		package="com.huy1234th.ballroll" file="Ball Roll" main="Main" version="1.1.0"
-		company="Huy1234TH" />
+	<app title="Ball Roll - The Game" file="Ball Roll" packageName="com.huy1234th.ballroll" package="com.huy1234th.ballroll" main="Main" version="1.1.0" company="Huy1234TH" />
+
+	<set name="APP_ID" value="0x0100f6c013bbc123" />
+
 	<app preloader="flixel.system.FlxPreloader" />
 
-	<!-- Minimum without FLX_NO_GAMEPAD: 11.8, without FLX_NO_NATIVE_CURSOR: 11.2 -->
 	<set name="SWF_VERSION" value="11.8" />
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
-	<!-- All targets -->
 	<window width="1280" height="720" fps="60" background="#000000" hardware="true" vsync="false" />
 
-	<!-- HTML5 -->
 	<window if="html5" resizable="true" />
 
-	<!-- Desktop -->
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" />
 
-	<!-- macOS -->
-	<window if="mac" orientation="auto" fullscreen="false" resizable="true" vsync="false"
-		allow-high-dpi="true" />
-
-	<!-- Mobile -->
-	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0"
-		resizable="false" allow-shaders="true" allow-high-dpi="true" />
+	<window if="mobile" orientation="landscape" fullscreen="true" width="1280" height="720" resizable="false"/>
 
 	<!-- _____________________________ Path Settings ____________________________ -->
 
 	<set name="BUILD_DIR" value="export/debug" if="debug" />
 	<set name="BUILD_DIR" value="export/release" unless="debug" />
+	<set name="BUILD_DIR" value="export/32bit" if="32bit" />
 
 	<source path="source" />
-
-	<assets path="assets" exclude="*.ogg" if="web" embed="true" />
-	<assets path="assets" exclude="*.mp3" unless="web" embed="true" />
+	<assets path="assets" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
-	<!-- Default flixel library -->
 	<haxelib name="flixel" />
+	<haxedev set='webgl' />
 
-	<!-- In case you want to use the addons package -->
 	<haxelib name="flixel-addons" />
-	<haxelib name="flixel-fanmade-addons" />
-	<haxelib name="flixel-screenshot-plugin" />
 
-	<!-- In case you want to use the ui package -->
 	<haxelib name="flixel-ui" />
-	<haxelib name="hscript" />
-
-	<!-- In case you want Android support -->
-	<haxelib name="extension-androidtools" if="android" />
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
-	<!-- Optimise inputs, be careful you will get null errors if you don't use conditionals in your
-	game -->
-	<haxedef name="FLX_NO_MOUSE" if="mobile" />
-	<haxedef name="FLX_NO_KEYBOARD" if="mobile" />
-	<haxedef name="FLX_NO_TOUCH" if="desktop" />
+	<haxedef name="FLX_NO_MOUSE" if="mobile"/>
+	<haxedef name="FLX_NO_KEYBOARD" if="mobile"/>
+	<haxedef name="FLX_NO_TOUCH" if="desktop"/>
+	<haxedef name="FLX_NO_GAMEPAD"/>
 
-	<!-- Disable the Flixel core debugger. Automatically gets set whenever you compile in release
-	mode! -->
+	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />
+
 	<haxedef name="FLX_NO_DEBUG" unless="debug" />
 
-	<!-- Enable this for Nape release builds for a serious peformance improvement -->
-	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
-
-	<!-- Fix for Macros -->
-	<haxeflag name="--macro" value="allowPackage('flash')" />
-	<haxeflag name="--macro" value="include('my.pack')" />
-
-	<!-- Analyzer Optimization -->
-	<haxedef name="analyzer-optimize" />
-
-	<!-- This is self-explanatory -->
-	<haxedef name="no-deprecation-warnings" />
-
-	<!-- Pretty Error Reporting -->
-	<haxedef name="message.reporting" value="pretty" />
-
-	<!-- iOS Deployment Target -->
-	<ios deployment="13.6" />
+	<haxedef name="HXCPP_GC_BIG_BLOCKS"/>
 
 	<!-- _________________________________ Custom _______________________________ -->
 
-	<!-- Place custom nodes like icons here (higher priority to override the HaxeFlixel icon) -->
+	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 </project>

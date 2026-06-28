@@ -1,17 +1,13 @@
 package states;
 
-import flixel.FlxG;
-import flixel.util.FlxColor;
-import game.states.GameState;
-
 class PlayState extends GameState
 {
-	override public function create():Void
+	override public function create()
 	{
 		super.create();
 	}
 
-	override public function update(elapsed:Float):Void
+	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
 	}

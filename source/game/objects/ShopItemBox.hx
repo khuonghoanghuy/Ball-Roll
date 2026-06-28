@@ -16,11 +16,14 @@ class ShopItemBox extends FlxSpriteGroup
     public var isSelected:Float = 0;
     public var currentLevel:Int = 1;
     public var maxLevel:Int = 5;
+    
+    public var itemName:String;
 
     public function new(x:Float, y:Float, id:Int, title:String)
     {
         super(x, y);
         this.id = id;
+        this.itemName = title;
 
         boxBg = new BRSprite(true, 0, 0, "menu/box", 64, 32);
         boxBg.addAnim("idle", [0]);
@@ -77,5 +80,25 @@ class ShopItemBox extends FlxSpriteGroup
             currentLevel++;
             infoText.text = 'LV: $currentLevel / $maxLevel';
         }
+    }
+    
+    public function getItemName():String
+    {
+        return itemName;
+    }
+    
+    public function isMaxLevel():Bool
+    {
+        return currentLevel >= maxLevel;
+    }
+    
+    public function getCurrentLevel():Int
+    {
+        return currentLevel;
+    }
+    
+    public function getMaxLevel():Int
+    {
+        return maxLevel;
     }
 }

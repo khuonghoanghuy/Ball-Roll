@@ -1,6 +1,5 @@
 package states;
 
-import haxe.rtti.CType.Rights;
 import game.data.SaveData;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
