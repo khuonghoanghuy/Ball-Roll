@@ -15,17 +15,14 @@ jobs:
           - target: windows
             title: Windows
             runs-on: windows-latest
-            hl-pattern: "hashlink-*-win64.zip"
             hl-bin: "hl.exe"
           - target: macos-x64
             title: Mac (x64)
             runs-on: macos-13
-            hl-pattern: "hashlink-*-darwin-cmake.tar.gz"
             hl-bin: "hl"
           - target: linux
             title: Linux
             runs-on: ubuntu-latest
-            hl-pattern: "hashlink-*-linux-arm64.tar.gz"
             hl-bin: "hl"
 
     name: build${{ matrix.title }}
@@ -52,11 +49,11 @@ jobs:
           echo "Downloading from: $URL"
           curl -L -o hashlink-download "$URL"
           
-          # Extract based on file extension
+          mkdir -p ./hashlink
+          
           if [[ "${{ matrix.target }}" == "windows" ]]; then
             unzip -q hashlink-download -d ./hashlink
           else
-            mkdir -p ./hashlink
             tar -xzf hashlink-download -C ./hashlink
           fi
           
@@ -65,25 +62,18 @@ jobs:
           echo "Downloaded and extracted HashLink:"
           ls -la ./hashlink
 
-      - name: Find and set HashLink path
+      - name: Set HashLink paths
         shell: bash
         run: |
-          echo "Contents of ./hashlink:"
+          HL_PATH="$(pwd)/hashlink"
+          
+          echo "HL_PATH=$HL_PATH" >> $GITHUB_ENV
+          echo "HL_BIN=$HL_PATH/${{ matrix.hl-bin }}" >> $GITHUB_ENV
+          
+          echo "HashLink path: $HL_PATH"
+          echo "HashLink binary: $HL_PATH/${{ matrix.hl-bin }}"
+          echo "Contents of hashlink folder:"
           ls -la ./hashlink
-          
-          HL_DIR=$(find ./hashlink -type d -name "hashlink-*" | head -n 1)
-          
-          if [ -z "$HL_DIR" ]; then
-            # If no hashlink-* folder, maybe files were extracted directly
-            HL_DIR="./hashlink"
-          fi
-          
-          echo "HL_PATH=$(pwd)/$HL_DIR" >> $GITHUB_ENV
-          echo "HL_BIN=$HL_DIR/${{ matrix.hl-bin }}" >> $GITHUB_ENV
-          
-          echo "Found HashLink at: $HL_DIR"
-          echo "Contents of $HL_DIR:"
-          ls -la "$HL_DIR"
 
       - name: Make HashLink executable (macOS/Linux)
         if: matrix.target != 'windows'
