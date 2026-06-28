@@ -5,7 +5,6 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
-
   workflow_dispatch:
 
 jobs:
@@ -16,18 +15,58 @@ jobs:
           - target: windows
             title: Windows
             runs-on: windows-latest
-          - target: macos
-            title: Mac
+            hl-pattern: "hashlink-latest-win64.zip"
+            hl-bin: "hl.exe"
+          - target: macos-arm64
+            title: Mac (ARM64)
             runs-on: macos-14
+            hl-pattern: "hashlink-latest-darwin-arm64.tar.gz"
+            hl-bin: "hl"
+          - target: macos-x64
+            title: Mac (x64)
+            runs-on: macos-13
+            hl-pattern: "hashlink-latest-darwin.tar.gz"
+            hl-bin: "hl"
           - target: linux
             title: Linux
             runs-on: ubuntu-latest
+            hl-pattern: "hashlink-latest-linux-amd64.tar.gz"
+            hl-bin: "hl"
 
     name: build${{ matrix.title }}
     runs-on: ${{ matrix.runs-on }}
 
     steps:
       - uses: actions/checkout@main
+
+      - name: Download HashLink nightly
+        uses: robinraju/release-downloader@v1.10
+        with:
+          repository: "HaxeFoundation/hashlink"
+          tag: "latest"
+          fileName: "${{ matrix.hl-pattern }}"
+          extract: true
+          out-file-path: "./hashlink"
+
+      - name: Find and set HashLink path
+        shell: bash
+        run: |
+          # Find the extracted directory (it will be hashlink-latest-*)
+          HL_DIR=$(find ./hashlink -type d -name "hashlink-latest-*" | head -n 1)
+          if [ -z "$HL_DIR" ]; then
+            # If no hashlink-latest-* folder, try hashlink-* pattern
+            HL_DIR=$(find ./hashlink -type d -name "hashlink-*" | head -n 1)
+          fi
+          echo "HL_PATH=$(pwd)/$HL_DIR" >> $GITHUB_ENV
+          echo "HL_BIN=$HL_DIR/${{ matrix.hl-bin }}" >> $GITHUB_ENV
+          
+          # Debug: Show what we found
+          echo "Found HashLink at: $HL_DIR"
+          ls -la "$HL_DIR"
+
+      - name: Make HashLink executable (macOS/Linux)
+        if: matrix.target != 'windows'
+        run: chmod +x ${{ env.HL_BIN }}
 
       - uses: krdlab/setup-haxe@master
         with:
@@ -38,14 +77,17 @@ jobs:
           haxelib install hxpkg 
           haxelib run hxpkg install
 
+      - name: Setup Lime with downloaded HashLink
+        run: haxelib run lime setup hl ${{ env.HL_PATH }}
+
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
 
       - name: Compile
         run: haxelib run lime build hl -final
 
-      - name: Tar files
-        if: matrix.target == 'macos'
+      - name: Tar files (macOS)
+        if: contains(matrix.target, 'macos')
         run: tar -zcvf Template.tar.gz export/release/hl/bin
 
       - name: Upload Artifact
@@ -53,3 +95,9 @@ jobs:
         with:
           name: ${{ matrix.target }}Build
           path: export/release/hl/bin
+
+      - name: Cleanup HashLink
+        if: always()
+        run: |
+          rm -rf ./hashlink
+          echo "HashLink downloaded files removed"

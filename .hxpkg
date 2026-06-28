@@ -25,6 +25,13 @@
 			{
 				"name": "hscript",
 				"version": "2.7.0"
+			},
+			{
+				"name": "flixel-fanmade-addons"
+			},
+			{
+				"name": "flixel-screenshot-plugin",
+				"link": "http://github.com/dotevie/flixel-screenshot-plugin"
 			}
 		]
 	}

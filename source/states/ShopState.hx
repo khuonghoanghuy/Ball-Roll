@@ -15,6 +15,8 @@ class ShopState extends GameState
     var bunchGroup:FlxTypedGroup<ShopItemBox> = new FlxTypedGroup<ShopItemBox>();
     var curSelected:Int = 0;
 
+    var shopGuy:BRSprite = new BRSprite(true, 0, 0, "player/shop guy", 64, 64);
+
     override function create() 
     {
         super.create();
@@ -27,20 +29,32 @@ class ShopState extends GameState
         arrowHint.playAnim("idle");
         arrowHint.flipX = true;
         arrowHint.alpha = 0;
+        arrowHint.scale.set(1.5, 1.5);
+        arrowHint.updateHitbox();
         add(arrowHint);
 
         add(bunchGroup);
 
         for (i in 0...bunchBuy.length)
         {
-            var box:ShopItemBox = new ShopItemBox(100, 80 + (i * 150), i, bunchBuy[i]);
-            
-            if (i == 0) box.descText.text = "Increase maxium player health.";
-            if (i == 1) box.descText.text = "Create a barrier to protect player.";
-            if (i == 2) box.descText.text = "Heal player when player touch the ball.";
-
+            var box:ShopItemBox = new ShopItemBox(100, 100 + (i * 150), i, bunchBuy[i]);
             bunchGroup.add(box);
         }
+
+        shopGuy.addAnim("idle", [0]);
+        shopGuy.addAnim("scale", [0, 1, 2, 2, 1, 0]);
+        shopGuy.addAnim("jump", [3, 4, 5, 6, 7, 8, 9, 10]);
+        shopGuy.addAnim("blink", [11, 12, 11]);
+        shopGuy.addAnim("talk", [13, 14]);
+        shopGuy.addFinishedWork("jump", function () {
+            shopGuy.playAnim("idle"); 
+        });
+        shopGuy.setupAutoRandom("idle", ["blink", "scale"], 2.0, 5.0);
+        shopGuy.scale.set(4.5, 4.5);
+        shopGuy.updateHitbox();
+        shopGuy.setPosition(866, 277);
+        shopGuy.playAnim("idle");
+        add(shopGuy);
 
         changeSelection(0);
     }

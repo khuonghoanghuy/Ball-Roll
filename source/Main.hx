@@ -1,5 +1,10 @@
 package;
 
+import flixel.util.FlxColor;
+import flixel.input.keyboard.FlxKey;
+import flixel.addons.plugin.ScreenShotPlugin;
+import fanmade.utils.FourthWall;
+import fanmade.FanmadeAddons;
 import flixel.FlxG;
 import openfl.Lib;
 import flixel.FlxGame;
@@ -50,5 +55,16 @@ class Main extends Sprite
 
 		FlxG.sound.soundTrayEnabled = false;
 		FlxG.sound.volumeDownKeys = FlxG.sound.volumeUpKeys = FlxG.sound.muteKeys = null;
+
+		FanmadeAddons.init();
+		FourthWall.renameWindow("Ball Roll - The Game");
+		FlxG.plugins.addPlugin(new ScreenShotPlugin());
+		ScreenShotPlugin.enabled = true;
+		ScreenShotPlugin.screenshotPath = "screenshot";
+		ScreenShotPlugin.screenshotKeys = [FlxKey.F2];
+		ScreenShotPlugin.saveFormat = PNG;
+		ScreenShotPlugin.flashColor = FlxColor.WHITE;
+		ScreenShotPlugin.outlineColor = FlxColor.BLACK;
+		ScreenShotPlugin.screenshotFadeTime = 0.5;
 	}
 }
