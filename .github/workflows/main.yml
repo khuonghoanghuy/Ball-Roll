@@ -7,8 +7,13 @@ on:
     branches: [master]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
+    timeout-minutes: 60
     strategy:
       matrix:
         include:
@@ -18,7 +23,7 @@ jobs:
             hl-bin: "hl.exe"
           - target: macos-x64
             title: Mac (x64)
-            runs-on: macos-13
+            runs-on: macos-14
             hl-bin: "hl"
           - target: linux
             title: Linux
