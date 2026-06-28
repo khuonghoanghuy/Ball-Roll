@@ -15,17 +15,17 @@ jobs:
           - target: windows
             title: Windows
             runs-on: windows-latest
-            hl-pattern: "hashlink-latest-win64.zip"
+            hl-pattern: "hashlink-*-win64.zip"
             hl-bin: "hl.exe"
           - target: macos-x64
             title: Mac (x64)
             runs-on: macos-13
-            hl-pattern: "hashlink-latest-darwin.tar.gz"
+            hl-pattern: "hashlink-*-darwin-cmake.tar.gz"
             hl-bin: "hl"
           - target: linux
             title: Linux
             runs-on: ubuntu-latest
-            hl-pattern: "hashlink-latest-linux-amd64.tar.gz"
+            hl-pattern: "hashlink-*-linux-arm64.tar.gz"
             hl-bin: "hl"
 
     name: build${{ matrix.title }}
@@ -34,28 +34,55 @@ jobs:
     steps:
       - uses: actions/checkout@main
 
-      - name: Download HashLink nightly (pre-release)
-        uses: robinraju/release-downloader@v1.10
-        with:
-          repository: "HaxeFoundation/hashlink"
-          tag: "latest"
-          fileName: "${{ matrix.hl-pattern }}"
-          extract: true
-          out-file-path: "./hashlink"
-          pre-release: true
+      - name: Download HashLink
+        shell: bash
+        run: |
+          case "${{ matrix.target }}" in
+            "windows")
+              URL="https://github.com/HaxeFoundation/hashlink/releases/download/latest/hashlink-68bd192-win64.zip"
+              ;;
+            "macos-x64")
+              URL="https://github.com/HaxeFoundation/hashlink/releases/download/latest/hashlink-68bd192-darwin-cmake.tar.gz"
+              ;;
+            "linux")
+              URL="https://github.com/HaxeFoundation/hashlink/releases/download/latest/hashlink-68bd192-linux-arm64.tar.gz"
+              ;;
+          esac
+          
+          echo "Downloading from: $URL"
+          curl -L -o hashlink-download "$URL"
+          
+          # Extract based on file extension
+          if [[ "${{ matrix.target }}" == "windows" ]]; then
+            unzip -q hashlink-download -d ./hashlink
+          else
+            mkdir -p ./hashlink
+            tar -xzf hashlink-download -C ./hashlink
+          fi
+          
+          rm hashlink-download
+          
+          echo "Downloaded and extracted HashLink:"
+          ls -la ./hashlink
 
       - name: Find and set HashLink path
         shell: bash
         run: |
-          HL_DIR=$(find ./hashlink -type d -name "hashlink-latest-*" | head -n 1)
+          echo "Contents of ./hashlink:"
+          ls -la ./hashlink
+          
+          HL_DIR=$(find ./hashlink -type d -name "hashlink-*" | head -n 1)
+          
           if [ -z "$HL_DIR" ]; then
-            # If no hashlink-latest-* folder, try hashlink-* pattern
-            HL_DIR=$(find ./hashlink -type d -name "hashlink-*" | head -n 1)
+            # If no hashlink-* folder, maybe files were extracted directly
+            HL_DIR="./hashlink"
           fi
+          
           echo "HL_PATH=$(pwd)/$HL_DIR" >> $GITHUB_ENV
           echo "HL_BIN=$HL_DIR/${{ matrix.hl-bin }}" >> $GITHUB_ENV
           
           echo "Found HashLink at: $HL_DIR"
+          echo "Contents of $HL_DIR:"
           ls -la "$HL_DIR"
 
       - name: Make HashLink executable (macOS/Linux)
