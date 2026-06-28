@@ -75,10 +75,6 @@ jobs:
           echo "Contents of hashlink folder:"
           ls -la ./hashlink
 
-      - name: Make HashLink executable (macOS/Linux)
-        if: matrix.target != 'windows'
-        run: chmod +x ${{ env.HL_BIN }}
-
       - uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.3.7
