@@ -16,10 +16,13 @@ class BRSprite extends FlxSprite
     public function new(isAnimated:Bool = true, x:Float = 0, y:Float = 0, sprite:String = null, frameWidth:Int = 0, frameHeight:Int = 0) 
     {
         super(x, y);
-        if (isAnimated)
-            loadGraphic(Paths.image(sprite), true, frameWidth, frameHeight);
-        else
-            loadGraphic(Paths.image(sprite), false);
+        if (sprite != null)
+        {
+            if (isAnimated)
+                loadGraphic(Paths.image(sprite), true, frameWidth, frameHeight);
+            else
+                loadGraphic(Paths.image(sprite), false);
+        }
     }    
 
     public function addAnim(name:String, array:Array<Int>, looped:Bool = false, fps:Int = 12)

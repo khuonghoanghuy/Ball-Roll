@@ -15,7 +15,7 @@ import flixel.FlxG;
     public var coin:Int = 0;
 
     // Setting
-    public var shader:Bool = false;
+    public var shader:Bool = true;
     public var muted:Bool = false;
     public var volume:Float = 1;
 }

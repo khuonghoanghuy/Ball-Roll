@@ -5,7 +5,7 @@ import flixel.text.FlxText;
 
 class BRText extends FlxText
 {
-    public function new(x:Float = 0, y:Float = 0, width:Int = 0, ?text:String = "", ?size:Int = 12, ?align:FlxTextAlign = LEFT) 
+    public function new(x:Float = 0, y:Float = 0, width:Float = 0, ?text:String = "", ?size:Int = 12, ?align:FlxTextAlign = LEFT) 
     {
         super(x, y, width, text, size);
         font = Paths.font("Pixeled.ttf");

@@ -1,5 +1,6 @@
 package;
 
+import game.data.SaveData;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
@@ -54,22 +55,15 @@ class Main extends Sprite
 	private function setupGame():Void
 	{
 		FlxGraphic.defaultPersist = true;
+		SaveData.init();
 
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen));
 
 		fpsOverlay = new FPS(10, 8, 0xFFFFFF);
 		addChild(fpsOverlay);
-		if (fpsOverlay != null)
-		{
-			fpsOverlay.visible = FlxG.save.data.showFPS;
-		}
 
 		memoryOverlay = new MemoryCounter(10, 20);
 		addChild(memoryOverlay);
-		if (memoryOverlay != null)
-		{
-			memoryOverlay = FlxG.save.data.showMemory;
-		}
 
 		FlxG.autoPause = false;
 		FlxG.mouse.useSystemCursor = true;

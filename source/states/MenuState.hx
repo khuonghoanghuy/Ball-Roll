@@ -27,6 +27,9 @@ class MenuState extends GameState
 	var syncTime:Float = 1.5;
 	var stopKey:Bool = false;
 
+	var camX:Float = 0;
+	var camY:Float = 0;
+
 	override public function create():Void
 	{
 		SaveData.init();
@@ -137,6 +140,15 @@ class MenuState extends GameState
 	{
 		super.update(elapsed);
 
+		var targetX:Float = ((FlxG.mouse.x - FlxG.width / 2) / (FlxG.width / 2)) * 4;
+		var targetY:Float = ((FlxG.mouse.y - FlxG.height / 2) / (FlxG.height / 2)) * 2;
+		
+		camX += (targetX - camX) * 0.08;
+		camY += (targetY - camY) * 0.08;
+		
+		FlxG.camera.scroll.x = camX;
+		FlxG.camera.scroll.y = camY;
+
 		if (!stopKey)
 		{
 			if (FlxG.keys.justPressed.ONE)
@@ -147,6 +159,10 @@ class MenuState extends GameState
 			if (FlxG.keys.justPressed.LEFT)
 			{
 				woaMoveToShop();
+			}
+			if (FlxG.keys.justPressed.DOWN)
+			{
+				woaOpenSetting();
 			}
 		}
 	}
@@ -180,5 +196,17 @@ class MenuState extends GameState
 				switchState(new ShopState());
 			}
 		});
+	}
+
+	function woaOpenSetting() 
+	{
+		stopKey = true;
+		FlxTween.tween(FlxG.camera, {y: 20}, 0.25 * syncTime, {ease: FlxEase.sineOut, onComplete: function (tween:FlxTween) {
+			FlxTween.tween(FlxG.camera, {y: -720}, 0.65 * syncTime, {ease: FlxEase.sineIn, onStart: function (tween:FlxTween) {
+				FlxG.camera.fade(FlxColor.BLACK, 0.65 * syncTime);	
+			}, onComplete: function (tween:FlxTween) {
+				switchState(new SettingState());
+			}});
+		}});
 	}
 }
